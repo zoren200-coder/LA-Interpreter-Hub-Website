@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Louisiana Interpreters Hub: a shared space to study, connect, and grow in the interpreting profession.">
+<title>Resource Library | Louisiana Interpreters Hub</title>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/library.css">
+<script defer src="data/resources.js"></script>
+<script defer src="assets/navigation.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <a href="index.html" class="brand" aria-label="Louisiana Interpreters Hub home">
+    <img
+      class="brand-logo"
+      src="Louisiana%20Interpreters%20Hub%20Banner.png"
+      alt="Louisiana Interpreters Hub"
+      width="2170"
+      height="725"
+      fetchpriority="high"
+    >
+  </a>
+  <div class="header-nav">
+    <div class="wrap header-inner">
+      <button class="menu" aria-expanded="false" aria-controls="navigation">Menu ☰</button>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href="index.html#library">Study library</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#about" class="nav-cta">About the hub ↗</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap library-page">
+<div class="breadcrumb"><a href="index.html">Home</a> / <a href="resources.html">Resources</a></div>
+<h1 id="page-title">Resource library</h1>
+<p>Browse published materials by topic, language, and resource type.</p>
+<form class="resource-filters" role="search">
+<label>Search resources<input id="resource-search" type="search" name="q" placeholder="Title, description, or author"></label>
+<label>Category<select id="resource-category" name="category"><option value="">All categories</option></select></label>
+<label>Subcategory<select id="resource-subcategory" name="subcategory"><option value="">All subcategories</option></select></label>
+<label>Language<select id="resource-language" name="language"><option value="">All languages</option></select></label>
+<label>Resource type<select id="resource-type" name="type"><option value="">All types</option></select></label>
+</form>
+<p id="results-status" role="status" aria-live="polite"></p>
+<div id="resource-results" class="resource-results"></div>
+<p id="library-empty" class="library-empty" hidden></p>
+<p>Existing illustrative study topics remain available in the <a href="index.html#library">homepage study section</a>.</p>
+<noscript><p>Enable JavaScript to browse and filter the catalog. You can still access the <a href="index.html#library">existing study topics</a>.</p></noscript>
+</main>
+<footer>
+  <div class="wrap footer-inner">
+    <span>© <span id="year">2026</span> Louisiana Interpreters Hub</span>
+    <span>Supporting the people who make understanding possible.</span>
+  </div>
+</footer>
+
+<script defer src="assets/library.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+.header-nav{position:relative;z-index:5}
+#navigation{gap:12px;flex-wrap:wrap}
+#navigation details{position:relative}
+#navigation summary{cursor:pointer;font-size:14px;font-weight:600;padding:9px 12px;border-radius:5px}
+#navigation summary:hover,#navigation details[open]>summary{background:#244e6a;color:#ffe0a6}
+#navigation .nav-panel{position:absolute;top:100%;left:0;min-width:260px;max-width:340px;padding:8px;background:#142f48;border:1px solid #dfbd7f;border-radius:5px;box-shadow:0 8px 24px #0003}
+#navigation .nav-panel a{display:block;white-space:normal}
+#navigation .nav-panel .nav-panel{position:static;border:0;border-left:2px solid #dfbd7f;border-radius:0;min-width:0;box-shadow:none;margin:6px 0 6px 8px}
+.nav-search{display:flex;align-items:center;gap:8px}
+.nav-search svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;flex-shrink:0}
+.library-page{padding-top:35px;padding-bottom:35px;min-height:50vh}
+.breadcrumb{font-size:14px;margin-bottom:24px}
+.library-page h1{font-size:clamp(28px,4vw,44px)}
+.resource-filters{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:14px;align-items:end;margin:28px 0}
+.resource-filters label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:bold;min-width:0}
+.resource-filters input,.resource-filters select{min-width:0;width:100%;padding:11px}
+.resource-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.resource-results article{background:white;border:1px solid var(--line);padding:24px;border-radius:7px;overflow-wrap:anywhere}
+.resource-results h2{font-size:24px}.resource-results dl{font-size:13px}.resource-results dt{font-weight:bold}.resource-results dd{margin:0 0 8px}
+.library-empty{padding:24px;background:white;border:1px solid var(--line);border-radius:7px}
+@media(max-width:1100px){.resource-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.resource-filters label:first-child{grid-column:1/-1}}
+@media(max-width:850px){#navigation{align-items:stretch}#navigation>details{width:100%}#navigation .nav-panel{position:static;max-width:none;min-width:0;box-shadow:none;margin:4px 0 8px}.resource-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.resource-results,.resource-filters{grid-template-columns:1fr}#navigation .nav-panel a{text-align:left}}
+#navigation>details:last-of-type>.nav-panel{left:auto;right:0}
