@@ -16,14 +16,14 @@
     link('View all ' + category.title.toLowerCase(), 'resources.html?category=' + category.id),
     ...category.subcategories.map(sub => link(sub.title, 'resources.html?category=' + category.id + '&subcategory=' + sub.id))
   ]);
-  const search = link('Search resources', 'resources.html#resource-search');
+  const search = link('Search', 'resources.html#resource-search');
   search.className = 'nav-search';
   const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   icon.setAttribute('viewBox', '0 0 24 24'); icon.setAttribute('aria-hidden', 'true');
   icon.innerHTML = '<circle cx="10" cy="10" r="6"></circle><path d="m15 15 6 6"></path>';
   search.prepend(icon);
   nav.replaceChildren(link('Home', 'index.html'), categoryGroup(catalog.categories[0]), categoryGroup(catalog.categories[1]),
-    group('More', [categoryGroup(catalog.categories[2]), link('About the Hub', 'index.html#about')]), search);
+    categoryGroup(catalog.categories[2]), link('About the Hub', 'index.html#about'), search);
   const button = document.querySelector('.menu');
   const closeAll = () => nav.querySelectorAll('details[open]').forEach(d => { d.open = false; });
   button.addEventListener('click', () => {

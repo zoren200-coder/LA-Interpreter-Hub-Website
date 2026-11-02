@@ -20,6 +20,8 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
     assert.equal(catalog.resources.length, 0, 'No invented materials');
+    assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
+    assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
     for (const url of links) {
       const response = await page.request.get(url);
@@ -39,24 +41,19 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       await open('index.html');
       const mobile = width <= 850;
       if (mobile) await page.locator('.menu').click();
-      for (const title of ['Resources and Knowledge', 'Ethics and Professional Practice', 'More']) {
+      for (const title of ['Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents']) {
         const summary = page.locator('#navigation > details > summary', {hasText: title});
         await summary.focus();
         await page.keyboard.press('Enter');
         assert(await summary.evaluate(el => el.parentElement.open));
         await page.keyboard.press('Tab');
         assert(await page.evaluate(() => document.activeElement.tagName === 'A' || document.activeElement.tagName === 'SUMMARY'));
-        if (title === 'More') {
-          const nested = page.locator('#navigation details details > summary');
-          await nested.focus(); await page.keyboard.press('Space');
-          assert(await nested.evaluate(el => el.parentElement.open));
+        if (title === 'Archive and Important Documents') {
           assert(await page.getByRole('link', {name: 'Official Documents', exact: true}).isVisible());
-          const outside = await page.locator('#navigation details details .nav-panel').evaluate(el => { const r=el.getBoundingClientRect();return r.left<0 || r.right>innerWidth; });
-          assert(!outside, 'Nested panel fits viewport at ' + width);
-          await page.keyboard.press('Escape');
-          assert(!(await nested.evaluate(el => el.parentElement.open)));
-          assert(await page.locator('#navigation > details').last().evaluate(el => el.open));
+          assert(await page.getByRole('link', {name: 'Position Papers & White Papers', exact: true}).isVisible());
         }
+        const outside = await summary.locator('..').locator('.nav-panel').evaluate(el => {const r=el.getBoundingClientRect();return r.left<0 || r.right>innerWidth;});
+        assert(!outside, 'Dropdown fits viewport at ' + width);
         await summary.focus(); await page.keyboard.press('Escape');
         assert(!(await summary.evaluate(el => el.parentElement.open)));
       }
@@ -71,7 +68,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       await open('resources.html');
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Library overflow ' + width);
     }
-    console.log('Dropdowns, nested menus, keyboard controls, logo and layouts pass at 8 viewport widths.');
+    console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 8 viewport widths.');
     await open('index.html');
     assert.equal(await page.locator('.card').count(), 3);
     await page.locator('#search').fill('confidentiality');
