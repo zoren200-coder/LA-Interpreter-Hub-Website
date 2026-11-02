@@ -22,3 +22,15 @@
 @media(max-width:850px){#navigation{align-items:stretch}#navigation>details{width:100%}#navigation .nav-panel{position:static;max-width:none;min-width:0;box-shadow:none;margin:4px 0 8px}.resource-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.resource-results,.resource-filters{grid-template-columns:1fr}#navigation .nav-panel a{text-align:left}}
 #navigation>details:last-of-type>.nav-panel{left:auto;right:0}
+
+/* Keep every desktop category visible; never move items into overflow menus. */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#navigation>details>summary{list-style:none;display:flex;align-items:center;gap:6px}
+#navigation>details>summary::-webkit-details-marker{display:none}
+#navigation>details>summary::after{content:'▼';font-size:9px;flex-shrink:0}
+@media(min-width:851px){
+  #navigation{display:grid;grid-template-columns:auto minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,1.55fr) auto auto;width:100%;gap:8px}
+  #navigation>details{min-width:0}
+  #navigation>details>summary,#navigation>a{font-size:clamp(12px,1vw,14px);padding:9px 8px;white-space:normal;overflow:visible;text-overflow:clip}
+  #navigation>details>summary{line-height:1.5}
+}

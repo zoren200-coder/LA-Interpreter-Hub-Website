@@ -18,6 +18,10 @@
   ]);
   const search = link('Search', 'resources.html#resource-search');
   search.className = 'nav-search';
+  search.setAttribute('aria-label', 'Search resources');
+  const searchLabel = document.createElement('span');
+  searchLabel.className = 'visually-hidden'; searchLabel.textContent = 'Search';
+  search.replaceChildren(searchLabel);
   const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   icon.setAttribute('viewBox', '0 0 24 24'); icon.setAttribute('aria-hidden', 'true');
   icon.innerHTML = '<circle cx="10" cy="10" r="6"></circle><path d="m15 15 6 6"></path>';

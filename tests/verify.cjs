@@ -36,11 +36,22 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       }
     }
     console.log('All navigation destinations and 11 subcategory views load.');
-    for (const width of [320, 375, 600, 768, 850, 851, 1024, 1440]) {
+    for (const width of [320, 375, 600, 768, 850, 851, 1024, 1280, 1440]) {
       await page.setViewportSize({width, height: 1000});
       await open('index.html');
       const mobile = width <= 850;
       if (mobile) await page.locator('.menu').click();
+      assert.equal(await page.locator('#navigation summary').filter({hasText: /^More$/}).count(), 0);
+      if (!mobile) {
+        const items = await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(node => {
+          const control = node.tagName === 'DETAILS' ? node.querySelector('summary') : node;
+          const r = control.getBoundingClientRect(); const style = getComputedStyle(control);
+          return {visible:r.width>0 && r.height>0 && r.left>=0 && r.right<=innerWidth, center:r.top+r.height/2, clipped:control.scrollWidth>control.clientWidth, ellipsis:style.textOverflow==='ellipsis'};
+        }));
+        assert(items.every(item => item.visible && !item.clipped && !item.ellipsis), 'All desktop headings fully visible at ' + width);
+        assert(Math.max(...items.map(i=>i.center))-Math.min(...items.map(i=>i.center)) < 2, 'Desktop items share one row');
+        assert(!(await page.locator('.menu').isVisible()));
+      }
       for (const title of ['Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents']) {
         const summary = page.locator('#navigation > details > summary', {hasText: title});
         await summary.focus();
@@ -68,7 +79,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       await open('resources.html');
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Library overflow ' + width);
     }
-    console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 8 viewport widths.');
+    console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 9 viewport widths.');
     await open('index.html');
     assert.equal(await page.locator('.card').count(), 3);
     await page.locator('#search').fill('confidentiality');
