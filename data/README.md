@@ -2,8 +2,9 @@
 
 `resources.js` is the single catalog for navigation, categories, and resource records.
 Each category/subcategory ID is stable and is used in shareable `resources.html` URLs.
-The catalog contains 17 original-source references supplied by the site owner: 14 in
-Spanish ↔ English and 3 in Vietnamese ↔ English. The owner
+The catalog contains 22 unique original-source references supplied by the site owner:
+14 Spanish ↔ English, 3 Vietnamese ↔ English, and 6 Arabic ↔ English listings.
+Miranda Warnings is cross-listed between Spanish and Arabic using one record and URL. The owner
 confirmed both Google Drive files use “Anyone with the link” sharing; neither file is rehosted. These are
 links to the original publishers, not redistributed copies. The original homepage topics remain intact.
 External link verification is currently blocked by the environment; see RESOURCE_IMPORT_REPORT.md and VIETNAMESE_RESOURCE_IMPORT_REPORT.md.
@@ -19,6 +20,8 @@ Add actual records to `resources` with these fields:
 - `url`: existing relative file location or HTTPS URL; do not invent links.
 - `linkLabel`, `openInNewTab`: optional link label and safe new-tab behavior.
 - `sharingPermission`: owner-provided sharing confirmation, when available.
+- `additionalListings`: optional section-specific category, subcategory, title, description,
+  subject and link presentation. Preserve the primary record; do not duplicate its URL.
 - `subject`: subject grouping within the Spanish–English section.
 - `status`: `published` or `review`.
 - `metadataSource`, `accessStatus`, `distribution`: provenance and verification notes.

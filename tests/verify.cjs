@@ -19,10 +19,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 17, 'Seventeen user-supplied original-source references');
+    assert.equal(catalog.resources.length, 22, 'Twenty-two unique original-source references');
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 17);
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 17);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 22);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 22);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
@@ -79,10 +79,38 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           await page.locator('#resource-language').selectOption('Vietnamese / English');
           assert.equal(await page.locator('#resource-results article').count(), 1);
           assert.equal(await page.locator('#resource-results article a').getAttribute('href'), 'https://www.youtube.com/watch?v=r1v5Q5eeXPg');
+        } else if (sub.id === 'arabic-english') {
+          assert.equal(await page.locator('#resource-results article').count(), 6);
+          const expected = [
+            ['Glossary of Legal Terminology: English–Arabic – Wisconsin Court System', 'https://www.wicourts.gov/services/interpreter/docs/arabicglossary.pdf'],
+            ['Online Resources for Arabic–English Translators – Cadenza Academic Translations', 'https://www.cadenza-academictranslations.com/blog/2022/02/11/online-resources-for-arabicenglish-translators/'],
+            ['Arabic–English Consecutive Interpretation Practice', 'https://www.youtube.com/watch?v=iO-nITg0ydE'],
+            ['Arabic–English Simultaneous Interpreting… No Booth?! Interpreter in Action', 'https://www.youtube.com/watch?v=eiBw8uiADXY'],
+            ['Eliane Sfeir-Markus on Arabic Interpreting – Episode 63', 'https://www.youtube.com/watch?v=Y5a2S2Je-X8'],
+            ['Miranda Warnings Translations – Multilingual Legal Resource', 'https://www.mirandawarningstranslations.com/']
+          ];
+          for (const [title, url] of expected) {
+            await page.locator('#resource-search').fill(title);
+            assert.equal(await page.locator('#resource-results article').count(), 1);
+            assert.equal(await page.locator('#resource-results article h2').textContent(), title);
+            assert.equal(await page.locator('#resource-results article a').textContent(), 'View Resource');
+            assert.equal(await page.locator('#resource-results article a').getAttribute('href'), url);
+          }
+          await page.locator('#resource-search').fill('');
+          await page.locator('#resource-type').selectOption('video');
+          assert.equal(await page.locator('#resource-results article').count(), 3);
+          await page.locator('#resource-subject').selectOption('Simultaneous interpreting practice');
+          assert.equal(await page.locator('#resource-results article').count(), 1);
+          await page.locator('#resource-language').selectOption('Arabic / English');
+          assert.equal(await page.locator('#resource-results article').count(), 1);
         } else assert(await page.locator('#library-empty').isVisible());
       }
     }
-    console.log('All navigation destinations and 11 subcategory views load.');
+    await open('resources.html');
+    assert.equal(await page.locator('#resource-results article').count(), 22);
+    await page.locator('#resource-search').fill('Miranda');
+    assert.equal(await page.locator('#resource-results article').count(), 1, 'Cross-list is not a duplicate global result');
+    console.log('All navigation destinations and 11 subcategory views load; 6 Arabic listings and unique global results verified.');
     for (const width of [320, 375, 600, 768, 850, 851, 1024, 1280, 1440]) {
       await page.setViewportSize({width, height: 1000});
       await open('index.html');
@@ -125,6 +153,9 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       }
       await open('resources.html');
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Library overflow ' + width);
+      await open('resources.html?category=knowledge&subcategory=arabic-english');
+      assert.equal(await page.locator('#resource-results article').count(), 6);
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Arabic library overflow ' + width);
     }
     console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 9 viewport widths.');
     await open('index.html');

@@ -26,12 +26,16 @@
   };
   const render = () => {
     const q = search.value.trim().toLocaleLowerCase();
-    const results = catalog.resources.filter(r => r.status !== 'review' && safeURL(r.url) &&
+    // Use section-specific labels for cross-listed records, retaining one source URL.
+    const results = catalog.resources.map(r => {
+      const listing = (r.additionalListings || []).find(l => l.subcategory === subcategory.value && (!category.value || l.category === category.value));
+      return listing ? {...r, ...listing} : r;
+    }).filter(r => r.status !== 'review' && safeURL(r.url) &&
       (!category.value || r.category === category.value) &&
       (!subcategory.value || r.subcategory === subcategory.value) &&
       (!language.value || (r.language || 'Not specified') === language.value) && (!type.value || r.type === type.value) &&
       (!subject.value || r.subject === subject.value) &&
-      [r.title, r.description, r.source, r.subject].join(' ').toLocaleLowerCase().includes(q));
+      [r.title, r.description, r.source, r.subject, ...(r.additionalListings || []).map(l => [l.title, l.description, l.subject].join(' '))].join(' ').toLocaleLowerCase().includes(q));
     const selectedCategory = catalog.categories.find(c => c.id === category.value);
     const selectedSubcategory = catalog.categories.flatMap(c => c.subcategories).find(s => s.id === subcategory.value);
     const title = selectedSubcategory?.title || selectedCategory?.title || 'Resource library';
