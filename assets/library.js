@@ -1,14 +1,15 @@
 (() => {
   const catalog = window.HUB_CATALOG;
   const $ = id => document.getElementById(id);
-  const fields = ['q', 'category', 'subcategory', 'language', 'type'];
-  const controls = [$('resource-search'), $('resource-category'), $('resource-subcategory'), $('resource-language'), $('resource-type')];
-  const [search, category, subcategory, language, type] = controls;
+  const fields = ['q', 'category', 'subcategory', 'language', 'type', 'subject'];
+  const controls = [$('resource-search'), $('resource-category'), $('resource-subcategory'), $('resource-language'), $('resource-type'), $('resource-subject')];
+  const [search, category, subcategory, language, type, subject] = controls;
   const params = new URLSearchParams(location.search);
   const option = (value, title) => new Option(title, value);
   catalog.categories.forEach(c => category.add(option(c.id, c.title)));
   Object.entries(catalog.types).forEach(([id, title]) => type.add(option(id, title)));
-  [...new Set(catalog.resources.map(r => r.language))].sort().forEach(l => language.add(option(l, l)));
+  [...new Set(catalog.resources.map(r => r.language || 'Not specified'))].sort().forEach(l => language.add(option(l, l)));
+  [...new Set(catalog.resources.map(r => r.subject).filter(Boolean))].sort().forEach(value => subject.add(option(value, value)));
   const fillSubcategories = () => {
     subcategory.replaceChildren(option('', 'All subcategories'));
     catalog.categories.filter(c => !category.value || c.id === category.value).forEach(c => {
@@ -28,8 +29,9 @@
     const results = catalog.resources.filter(r => r.status !== 'review' && safeURL(r.url) &&
       (!category.value || r.category === category.value) &&
       (!subcategory.value || r.subcategory === subcategory.value) &&
-      (!language.value || r.language === language.value) && (!type.value || r.type === type.value) &&
-      [r.title, r.description, r.source].join(' ').toLocaleLowerCase().includes(q));
+      (!language.value || (r.language || 'Not specified') === language.value) && (!type.value || r.type === type.value) &&
+      (!subject.value || r.subject === subject.value) &&
+      [r.title, r.description, r.source, r.subject].join(' ').toLocaleLowerCase().includes(q));
     const selectedCategory = catalog.categories.find(c => c.id === category.value);
     const selectedSubcategory = catalog.categories.flatMap(c => c.subcategories).find(s => s.id === subcategory.value);
     const title = selectedSubcategory?.title || selectedCategory?.title || 'Resource library';
@@ -42,10 +44,11 @@
       const meta = document.createElement('dl');
       const c = catalog.categories.find(c => c.id === r.category);
       const s = c?.subcategories.find(s => s.id === r.subcategory);
-      for (const [label, value] of Object.entries({Category: c?.title, Subcategory: s?.title, Type: catalog.types[r.type], Language: r.language, 'Source or author': r.source})) {
+      for (const [label, value] of Object.entries({Category: c?.title, Subcategory: s?.title, Type: catalog.types[r.type], Language: r.language, 'Source or author': r.source, Subject: r.subject})) {
         meta.append(text('dt', label), text('dd', value || 'Not specified'));
       }
-      const a = text('a', 'Open resource'); a.href = safeURL(r.url);
+      const a = text('a', r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource'); a.href = safeURL(r.url);
+      a.className = 'button'; a.setAttribute('aria-label', a.textContent + ': ' + r.title);
       article.append(meta, a); return article;
     }));
     $('library-empty').hidden = results.length > 0;
@@ -57,7 +60,7 @@
   document.querySelector('.resource-filters').addEventListener('submit', event => { event.preventDefault(); render(); });
   search.addEventListener('input', render);
   category.addEventListener('change', () => { fillSubcategories(); render(); });
-  [subcategory, language, type].forEach(control => control.addEventListener('change', render));
+  [subcategory, language, type, subject].forEach(control => control.addEventListener('change', render));
   render();
   if (location.hash === '#resource-search') search.focus();
   document.getElementById('year').textContent = new Date().getFullYear();

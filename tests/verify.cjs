@@ -19,7 +19,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 0, 'No invented materials');
+    assert.equal(catalog.resources.length, 12, 'Twelve user-supplied original-source references');
+    assert.equal(catalog.reviewQueue.length, 2, 'Two Drive files held for sharing review');
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 14);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 14);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
@@ -32,7 +35,14 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
         await open(`resources.html?category=${category.id}&subcategory=${sub.id}`);
         assert.equal(await page.locator('#page-title').textContent(), sub.title);
         assert.equal(await page.locator('#resource-subcategory').inputValue(), sub.id);
-        assert(await page.locator('#library-empty').isVisible());
+        if (sub.id === 'spanish-english') {
+          assert.equal(await page.locator('#resource-results article').count(), 12);
+          await page.locator('#resource-subject').selectOption('Legal and judicial');
+          assert.equal(await page.locator('#resource-results article').count(), 4);
+          await page.locator('#resource-search').fill('Vera Institute');
+          assert.equal(await page.locator('#resource-results article h2').textContent(), 'A Spanish Glossary for New York City');
+          assert.equal(await page.locator('#resource-results article a').getAttribute('href'), 'https://www.nycourts.gov/d10files/2018-05/translatingJustice_Spanish.pdf');
+        } else assert(await page.locator('#library-empty').isVisible());
       }
     }
     console.log('All navigation destinations and 11 subcategory views load.');
@@ -96,6 +106,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(await page.evaluate(() => document.activeElement.id), 'resource-search');
     // Synthetic test data stays in this browser context; it is not a real catalog.
     await page.evaluate(() => {
+      HUB_CATALOG.resources = [];
       HUB_CATALOG.resources.push(
         {id:'test-a',title:'Alpha',description:'First test',category:'knowledge',subcategory:'spanish-english',type:'pdf',language:'Spanish',source:'Test author',url:'index.html',status:'published'},
         {id:'test-b',title:'Beta',description:'Second test',category:'ethics',subcategory:'codes',type:'video',language:'English',source:'Test author',url:'index.html',status:'published'},
@@ -117,7 +128,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     await page.locator('#resource-category').selectOption('knowledge');
     await page.locator('#resource-subcategory').selectOption('spanish-english');
     assert.equal(await page.locator('#resource-results article h2').textContent(), 'Alpha');
-    assert.equal(await page.locator('#resource-results dd').allTextContents().then(a=>a.join('|')), 'Resources and Knowledge|Spanish ↔ English Resources|PDF|Spanish|Test author');
+    assert.equal(await page.locator('#resource-results dd').allTextContents().then(a=>a.join('|')), 'Resources and Knowledge|Spanish ↔ English Resources|PDF|Spanish|Test author|Not specified');
     assert.equal(errors.length, 0, errors.join('\n'));
     console.log('Search, combined category/language/type filters, metadata rendering and review/unsafe-link exclusion pass. No JavaScript errors.');
   } finally { await browser.close(); }
