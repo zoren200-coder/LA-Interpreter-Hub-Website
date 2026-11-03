@@ -19,10 +19,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 14, 'Fourteen user-supplied original-source references');
+    assert.equal(catalog.resources.length, 17, 'Seventeen user-supplied original-source references');
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 14);
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 14);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 17);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 17);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
@@ -61,6 +61,24 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           await page.locator('#resource-search').fill('Vera Institute');
           assert.equal(await page.locator('#resource-results article h2').textContent(), 'A Spanish Glossary for New York City');
           assert.equal(await page.locator('#resource-results article a').getAttribute('href'), 'https://www.nycourts.gov/d10files/2018-05/translatingJustice_Spanish.pdf');
+        } else if (sub.id === 'vietnamese-english') {
+          assert.equal(await page.locator('#resource-results article').count(), 3);
+          for (const record of catalog.resources.filter(r => r.subcategory === 'vietnamese-english')) {
+            await page.locator('#resource-search').fill(record.title);
+            assert.equal(await page.locator('#resource-results article').count(), 1);
+            const button = page.locator('#resource-results article a');
+            assert.equal(await button.textContent(), 'View Resource');
+            assert.equal(await button.getAttribute('href'), record.url);
+            assert.equal(await button.getAttribute('target'), '_blank');
+          }
+          await page.locator('#resource-search').fill('');
+          await page.locator('#resource-subject').selectOption('Consecutive interpreting practice');
+          assert.equal(await page.locator('#resource-results article').count(), 1);
+          await page.locator('#resource-type').selectOption('video');
+          assert.equal(await page.locator('#resource-results article').count(), 1);
+          await page.locator('#resource-language').selectOption('Vietnamese / English');
+          assert.equal(await page.locator('#resource-results article').count(), 1);
+          assert.equal(await page.locator('#resource-results article a').getAttribute('href'), 'https://www.youtube.com/watch?v=r1v5Q5eeXPg');
         } else assert(await page.locator('#library-empty').isVisible());
       }
     }

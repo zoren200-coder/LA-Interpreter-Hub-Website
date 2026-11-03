@@ -2,10 +2,11 @@
 
 `resources.js` is the single catalog for navigation, categories, and resource records.
 Each category/subcategory ID is stable and is used in shareable `resources.html` URLs.
-The catalog contains 14 original-source references supplied by the site owner. The owner
+The catalog contains 17 original-source references supplied by the site owner: 14 in
+Spanish ↔ English and 3 in Vietnamese ↔ English. The owner
 confirmed both Google Drive files use “Anyone with the link” sharing; neither file is rehosted. These are
 links to the original publishers, not redistributed copies. The original homepage topics remain intact.
-External link verification is currently blocked by the environment; see RESOURCE_IMPORT_REPORT.md.
+External link verification is currently blocked by the environment; see RESOURCE_IMPORT_REPORT.md and VIETNAMESE_RESOURCE_IMPORT_REPORT.md.
 
 Add actual records to `resources` with these fields:
 
