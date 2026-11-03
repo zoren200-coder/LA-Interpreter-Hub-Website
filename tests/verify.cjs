@@ -19,8 +19,8 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 12, 'Twelve user-supplied original-source references');
-    assert.equal(catalog.reviewQueue.length, 2, 'Two Drive files held for sharing review');
+    assert.equal(catalog.resources.length, 14, 'Fourteen user-supplied original-source references');
+    assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
     assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 14);
     assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 14);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
@@ -36,7 +36,26 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
         assert.equal(await page.locator('#page-title').textContent(), sub.title);
         assert.equal(await page.locator('#resource-subcategory').inputValue(), sub.id);
         if (sub.id === 'spanish-english') {
-          assert.equal(await page.locator('#resource-results article').count(), 12);
+          assert.equal(await page.locator('#resource-results article').count(), 14);
+          for (const [id, subject, url] of [
+            ['maritime-dictionary', 'Maritime', 'https://drive.google.com/file/d/1mZufRauXg89ij-v6uobB3cBc8sh83fsl/view?usp=drive_link'],
+            ['i485-questionnaire-glossary', 'Immigration', 'https://drive.google.com/file/d/15y68EvDwaJn0sTCq-pzg_rWbofDLDdwg/view?usp=sharing']
+          ]) {
+            const record = catalog.resources.find(r => r.id === id);
+            assert.equal(record.url, url);
+            const parsed = new URL(record.url);assert.equal(parsed.hostname, 'drive.google.com');
+            assert(/^\/file\/d\/[A-Za-z0-9_-]+\/view$/.test(parsed.pathname));
+            await page.locator('#resource-subject').selectOption(subject);
+            assert.equal(await page.locator('#resource-results article').count(), 1);
+            const button = page.locator('#resource-results article a');
+            assert.equal(await button.textContent(), 'View Resource');
+            assert.equal(await button.getAttribute('href'), url);
+            assert.equal(await button.getAttribute('target'), '_blank');
+            assert((await button.getAttribute('rel')).includes('noopener'));
+            await page.locator('#resource-search').fill(id === 'maritime-dictionary' ? 'shipping contracts' : 'voluntary departure');
+            assert.equal(await page.locator('#resource-results article h2').textContent(), record.title);
+            await page.locator('#resource-search').fill('');
+          }
           await page.locator('#resource-subject').selectOption('Legal and judicial');
           assert.equal(await page.locator('#resource-results article').count(), 4);
           await page.locator('#resource-search').fill('Vera Institute');

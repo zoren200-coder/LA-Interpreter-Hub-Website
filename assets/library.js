@@ -47,8 +47,9 @@
       for (const [label, value] of Object.entries({Category: c?.title, Subcategory: s?.title, Type: catalog.types[r.type], Language: r.language, 'Source or author': r.source, Subject: r.subject})) {
         meta.append(text('dt', label), text('dd', value || 'Not specified'));
       }
-      const a = text('a', r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource'); a.href = safeURL(r.url);
-      a.className = 'button'; a.setAttribute('aria-label', a.textContent + ': ' + r.title);
+      const a = text('a', r.linkLabel || (r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource')); a.href = safeURL(r.url);
+      if (r.openInNewTab) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      a.className = 'button'; a.setAttribute('aria-label', a.textContent + ': ' + r.title + (r.openInNewTab ? ' (opens in a new tab)' : ''));
       article.append(meta, a); return article;
     }));
     $('library-empty').hidden = results.length > 0;

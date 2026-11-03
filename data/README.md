@@ -2,8 +2,8 @@
 
 `resources.js` is the single catalog for navigation, categories, and resource records.
 Each category/subcategory ID is stable and is used in shareable `resources.html` URLs.
-The catalog contains 12 original-source references supplied by the site owner. Two additional
-Google Drive references are held in `reviewQueue` pending public sharing review. These are
+The catalog contains 14 original-source references supplied by the site owner. The owner
+confirmed both Google Drive files use “Anyone with the link” sharing; neither file is rehosted. These are
 links to the original publishers, not redistributed copies. The original homepage topics remain intact.
 External link verification is currently blocked by the environment; see RESOURCE_IMPORT_REPORT.md.
 
@@ -16,6 +16,8 @@ Add actual records to `resources` with these fields:
 - `language`: language name (use a consistent vocabulary).
 - `source`: author or publishing organization.
 - `url`: existing relative file location or HTTPS URL; do not invent links.
+- `linkLabel`, `openInNewTab`: optional link label and safe new-tab behavior.
+- `sharingPermission`: owner-provided sharing confirmation, when available.
 - `subject`: subject grouping within the Spanish–English section.
 - `status`: `published` or `review`.
 - `metadataSource`, `accessStatus`, `distribution`: provenance and verification notes.

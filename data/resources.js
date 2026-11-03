@@ -20,7 +20,7 @@ window.HUB_CATALOG = {
     ]}
   ],
   types: {pdf: 'PDF', document: 'Document', video: 'Video', external: 'External link'},
-  // Prepared original-source references; link checks are blocked pending environment access.
+  // Original-source links only; external accessibility remains unverified.
   resources: [
   {
     "id": "irs-tax-glossary",
@@ -213,9 +213,7 @@ window.HUB_CATALOG = {
     "accessStatus": "Not verified: environment network policy blocks external access",
     "distribution": "Original-source link only; no document copied",
     "status": "published"
-  }
-],
-  reviewQueue: [
+  },
   {
     "id": "maritime-dictionary",
     "title": "Maritime Spanish-English Dictionary",
@@ -230,8 +228,10 @@ window.HUB_CATALOG = {
     "metadataSource": "User-supplied title and description",
     "accessStatus": "Not verified: environment network policy blocks external access",
     "distribution": "Original-source link only; no document copied",
-    "status": "review",
-    "reviewReason": "Public sharing, file format, and distribution permission have not been confirmed. Retain original source link; do not mirror the file without authorization."
+    "status": "published",
+    "sharingPermission": "Anyone with the link — confirmed by owner",
+    "linkLabel": "View Resource",
+    "openInNewTab": true
   },
   {
     "id": "i485-questionnaire-glossary",
@@ -247,8 +247,11 @@ window.HUB_CATALOG = {
     "metadataSource": "User-supplied title and description",
     "accessStatus": "Not verified: environment network policy blocks external access",
     "distribution": "Original-source link only; no document copied",
-    "status": "review",
-    "reviewReason": "Public sharing, file format, and distribution permission have not been confirmed. Retain original source link; do not mirror the file without authorization."
+    "status": "published",
+    "sharingPermission": "Anyone with the link — confirmed by owner",
+    "linkLabel": "View Resource",
+    "openInNewTab": true
   }
-]
+],
+  reviewQueue: []
 };
