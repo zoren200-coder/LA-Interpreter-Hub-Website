@@ -19,10 +19,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 44, 'Forty-four unique original-source references');
+    assert.equal(catalog.resources.length, 49, 'Forty-nine unique original-source references');
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 44);
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 44);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 49);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 49);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
@@ -157,11 +157,36 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           await page.locator('#resource-subject').selectOption('Research and Publications');
           assert.equal(await page.locator('#resource-results article').count(), 2);
           assert.deepEqual(await page.locator('.resource-date-heading').allTextContents(), ['Undated articles and publications']);
+        } else if (sub.id === 'general') {
+          assert.equal(await page.locator('#resource-results article').count(), 5);
+          const expected = [
+            ['Tips for Working with Interpreters in the Courtroom – Professional Guidelines', 'https://drive.google.com/file/d/1Gfb0Brx-jQqKhmY22mIIccZUgBDh7YQG/view?usp=drive_link'],
+            ['Language Access Board Act of 2026 – H.R. 8604', 'https://drive.google.com/file/d/1Ts25L6F5oj5tNr-yTSrR8nTX89jPCNPT/view?usp=drive_link'],
+            ['Free Interpreter Oral Exam Training to Manage Exam Anxiety', 'https://www.youtube.com/watch?v=EkWjr6lJXQk'],
+            ['USAGov en Español – Official U.S. Government Information', 'https://www.usa.gov/es/'],
+            ['Tips for Working with Court Interpreters in the Louisiana Courts – Louisiana Supreme Court', 'https://drive.google.com/file/d/10baMvwPGoxmUXl-nTZngS08b7jBRDj2f/view?usp=drive_link']
+          ];
+          assert.equal(catalog.resources.filter(r=>r.subcategory==='general').length, expected.length);
+          for (const [title, url] of expected) {
+            await page.locator('#resource-search').fill(title);
+            assert.equal(await page.locator('#resource-results article').count(), 1);
+            assert.equal(await page.locator('#resource-results article h2').textContent(), title);
+            assert.equal(await page.locator('#resource-results article a').textContent(), 'View Resource');
+            assert.equal(await page.locator('#resource-results article a').getAttribute('href'), url);
+            assert.equal(await page.locator('#resource-results article a').getAttribute('target'), '_blank');
+          }
+          await page.locator('#resource-search').fill('');
+          await page.locator('#resource-subject').selectOption('Courtroom interpreting guidelines');
+          assert.equal(await page.locator('#resource-results article').count(), 2);
+          await page.locator('#resource-type').selectOption('document');
+          assert.equal(await page.locator('#resource-results article').count(), 2);
+          await page.locator('#resource-search').fill('NAJIT');
+          assert.equal(await page.locator('#resource-results article').count(), 1);
         } else assert(await page.locator('#library-empty').isVisible());
       }
     }
     await open('resources.html');
-    assert.equal(await page.locator('#resource-results article').count(), 44);
+    assert.equal(await page.locator('#resource-results article').count(), 49);
     await page.locator('#resource-search').fill('Miranda');
     assert.equal(await page.locator('#resource-results article').count(), 1, 'Cross-list is not a duplicate global result');
     console.log('All navigation destinations and 11 subcategory views load; 6 Arabic listings and unique global results verified.');
@@ -216,6 +241,9 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       await open('resources.html?category=knowledge&subcategory=news');
       assert.equal(await page.locator('#resource-results article').count(), 10);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'News overflow ' + width);
+      await open('resources.html?category=knowledge&subcategory=general');
+      assert.equal(await page.locator('#resource-results article').count(), 5);
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'General resources overflow ' + width);
     }
     console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 9 viewport widths.');
     await open('index.html');
