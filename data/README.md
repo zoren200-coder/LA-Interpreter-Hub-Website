@@ -2,8 +2,8 @@
 
 `resources.js` is the single catalog for navigation, categories, and resource records.
 Each category/subcategory ID is stable and is used in shareable `resources.html` URLs.
-The catalog contains 52 unique published original-source references supplied by the site owner:
-14 Spanish ↔ English, 3 Vietnamese ↔ English, 6 Arabic ↔ English, and 12 training, 10 Articles & News, and 5 General Resources and 3 Ethics and Professional Practice listings.
+The catalog contains 55 unique published resource records supplied by the site owner:
+14 Spanish ↔ English, 3 Vietnamese ↔ English, 6 Arabic ↔ English, and 12 training, 10 Articles & News, and 5 General Resources and 3 Ethics and Professional Practice, and 3 Official Documents listings.
 The owner confirmed public-link sharing for the training Drive guide; no files are rehosted.
 Miranda Warnings is cross-listed between Spanish and Arabic using one record and URL. The owner
 confirmed both Google Drive files use “Anyone with the link” sharing; neither file is rehosted. These are
@@ -47,3 +47,7 @@ This requires the Playwright Node package and Chromium (`CHROMIUM_PATH` can over
 `/usr/bin/chromium`). The suite checks navigation destinations, all 11 subcategory
 views, desktop/tablet/mobile and keyboard menus, preserved homepage functionality,
 and filters using temporary in-memory test records. No test records enter the catalog.
+
+Official Documents includes two owner-authorized local PDFs in `documents/official/`.
+Their `download` fields preserve filenames; `sha256` records original-byte integrity.
+The LPOR link remains externally hosted and unverified.

@@ -20,7 +20,7 @@ window.HUB_CATALOG = {
     ]}
   ],
   types: {pdf: 'PDF', document: 'Document', video: 'Video', external: 'External link'},
-  // Original-source links only; external accessibility remains unverified.
+  // Resource catalog: original-source links and owner-authorized PDF downloads.
   resources: [
   {
     "id": "irs-tax-glossary",
@@ -982,6 +982,62 @@ window.HUB_CATALOG = {
     "distribution": "Original-source link only; no source document copied",
     "linkLabel": "View Resource",
     "openInNewTab": true
+  },
+  {
+    "id": "la-attorney-reference-card",
+    "title": "USE OF COURT INTERPRETERS: AN ATTORNEY REFERENCE CARD",
+    "description": "A two-page attorney reference card covering Louisiana code provisions, interpreter ethics, practical courtroom communication tips, and simultaneous, consecutive, and sight interpretation.",
+    "url": "documents/official/LA%20Attorney%20Card.pdf",
+    "type": "pdf",
+    "language": "English",
+    "source": "Owner-supplied document; references Louisiana Supreme Court rules",
+    "subject": "Courtroom interpreting and language access",
+    "category": "archive",
+    "subcategory": "official",
+    "status": "published",
+    "linkLabel": "Download PDF",
+    "download": "LA Attorney Card.pdf",
+    "sha256": "8a6d7065669955adb5ab84f082397f373adf6ab6f03d777b3fbaeb7901dc70b6",
+    "distribution": "Original uploaded PDF; public download authorized by owner",
+    "accessStatus": "Local file inspected and copied byte-for-byte",
+    "metadataSource": "Text extracted from the owner-uploaded PDF; file contents unchanged"
+  },
+  {
+    "id": "louisiana-language-access-bench-card",
+    "title": "LOUISIANA’S LANGUAGE ACCESS JUDICIAL BENCH CARD",
+    "description": "A two-page Louisiana judicial bench card on identifying language-access needs, obtaining court interpreters, explaining their role, and working with people with limited English proficiency.",
+    "url": "documents/official/Language_Access_Bench_Card.pdf",
+    "type": "pdf",
+    "language": "English",
+    "source": "Louisiana Supreme Court",
+    "subject": "Courtroom interpreting and language access",
+    "category": "archive",
+    "subcategory": "official",
+    "status": "published",
+    "linkLabel": "Download PDF",
+    "download": "Language_Access_Bench_Card.pdf",
+    "sha256": "3718bc3eac73209fa3c65cbe2923fd4c38337d8b9ab22460e9874878cfdbd620",
+    "distribution": "Original uploaded PDF; public download authorized by owner",
+    "accessStatus": "Local file inspected and copied byte-for-byte",
+    "metadataSource": "Text extracted from the owner-uploaded PDF; file contents unchanged"
+  },
+  {
+    "id": "lasc-lpor-spanish-forms",
+    "title": "Louisiana Supreme Court — LPOR Forms (Spanish)",
+    "description": "Owner-supplied link to the Louisiana Supreme Court LPOR forms page with the Spanish-language index selected. External page contents have not been independently verified.",
+    "url": "https://www.lasc.org/LPOR-Forms?p=index_1-25_espanol",
+    "type": "external",
+    "language": "Spanish",
+    "source": "Louisiana Supreme Court",
+    "subject": "Court forms and language access",
+    "category": "archive",
+    "subcategory": "official",
+    "status": "published",
+    "linkLabel": "View Resource",
+    "openInNewTab": true,
+    "accessStatus": "Unverified: external access restricted in the execution environment",
+    "distribution": "Original-source link only",
+    "metadataSource": "Descriptive label based on the owner-supplied URL; exact external page title unverified"
   }
 ],
   reviewQueue: [],

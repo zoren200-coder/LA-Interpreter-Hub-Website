@@ -65,6 +65,7 @@
         meta.append(text('dt', 'Publication date'), text('dd', r.publicationDate ? r.publicationDate + ' — ' + r.dateSource : 'Not provided'));
       }
       const a = text('a', r.linkLabel || (r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource')); a.href = safeURL(r.url);
+      if (r.download) a.download = r.download;
       if (r.openInNewTab) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
       a.className = 'button'; a.setAttribute('aria-label', a.textContent + ': ' + r.title + (r.openInNewTab ? ' (opens in a new tab)' : ''));
       article.append(meta, a); return article;

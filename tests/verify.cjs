@@ -19,10 +19,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 52, 'Fifty-two unique original-source references');
+    assert.equal(catalog.resources.length, 55, 'Fifty-five unique resource records');
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 52);
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 52);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 55);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 55);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
@@ -199,11 +199,39 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
             assert.equal(await page.locator('#resource-results article').count(), 1);
             await page.locator('#resource-subject').selectOption('');
           }
+        } else if (sub.id === 'official') {
+          assert.equal(await page.locator('#resource-results article').count(), 3);
+          const records = catalog.resources.filter(r=>r.category==='archive' && r.subcategory==='official');
+          assert.equal(records.length, 3);
+          for (const record of records) {
+            await page.locator('#resource-search').fill(record.title);
+            assert.equal(await page.locator('#resource-results article').count(), 1);
+            assert.equal(await page.locator('#resource-results article h2').textContent(), record.title);
+            const link = page.locator('#resource-results article a');
+            assert.equal(await link.getAttribute('href'), new URL(record.url, base + '/').href);
+            if (record.type === 'pdf') {
+              assert.equal(await link.textContent(), 'Download PDF');
+              assert.equal(await link.getAttribute('download'), record.download);
+              const response = await page.request.get(base + '/' + record.url);
+              assert.equal(response.status(), 200);
+              assert(response.headers()['content-type'].includes('application/pdf'));
+              const bytes=await response.body();assert.equal(bytes.subarray(0,5).toString(), '%PDF-');
+              assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),record.sha256);
+            } else {
+              assert.equal(record.url,'https://www.lasc.org/LPOR-Forms?p=index_1-25_espanol');
+              assert.equal(await link.textContent(),'View Resource');
+            }
+          }
+          await page.locator('#resource-search').fill('');
+          await page.locator('#resource-type').selectOption('pdf');
+          assert.equal(await page.locator('#resource-results article').count(), 2);
+          await page.locator('#resource-subject').selectOption('Courtroom interpreting and language access');
+          assert.equal(await page.locator('#resource-results article').count(), 2);
         } else assert(await page.locator('#library-empty').isVisible());
       }
     }
     await open('resources.html');
-    assert.equal(await page.locator('#resource-results article').count(), 52);
+    assert.equal(await page.locator('#resource-results article').count(), 55);
     await page.locator('#resource-search').fill('Miranda');
     assert.equal(await page.locator('#resource-results article').count(), 1, 'Cross-list is not a duplicate global result');
     console.log('All navigation destinations and 11 subcategory views load; 6 Arabic listings and unique global results verified.');
@@ -264,6 +292,9 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       await open('resources.html?category=ethics');
       assert.equal(await page.locator('#resource-results article').count(), 3);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Ethics overflow ' + width);
+      await open('resources.html?category=archive&subcategory=official');
+      assert.equal(await page.locator('#resource-results article').count(), 3);
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Official Documents overflow ' + width);
     }
     console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 9 viewport widths.');
     await open('index.html');
