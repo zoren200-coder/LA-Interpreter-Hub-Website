@@ -41,10 +41,16 @@
     const title = selectedSubcategory?.title || selectedCategory?.title || 'Resource library';
     $('page-title').textContent = title;
     document.title = title + ' | Louisiana Interpreters Hub';
+    const note = catalog.sectionNotes?.[subcategory.value];
+    const noteBox = $('resource-section-note');
+    noteBox.hidden = !note || (!!subject.value && subject.value !== note.subject);
+    noteBox.replaceChildren();
+    if (!noteBox.hidden) noteBox.append(text('h2', note.title), text('p', note.text), text('strong', note.warning));
     $('results-status').textContent = results.length + (results.length === 1 ? ' resource' : ' resources');
     $('resource-results').replaceChildren(...results.map(r => {
       const article = document.createElement('article');
       article.append(text('h2', r.title), text('p', r.description));
+      if (r.contentWarning) article.append(text('strong', r.contentWarning));
       const meta = document.createElement('dl');
       const c = catalog.categories.find(c => c.id === r.category);
       const s = c?.subcategories.find(s => s.id === r.subcategory);
