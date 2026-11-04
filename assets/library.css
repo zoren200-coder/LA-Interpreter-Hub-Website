@@ -36,3 +36,5 @@
 }
 
 .resource-results .button{margin-top:12px;max-width:100%;gap:8px}
+
+.resource-date-heading{grid-column:1/-1;margin:16px 0 0;font-size:26px}

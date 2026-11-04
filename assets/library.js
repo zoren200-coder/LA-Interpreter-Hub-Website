@@ -47,9 +47,13 @@
     noteBox.replaceChildren();
     if (!noteBox.hidden) noteBox.append(text('h2', note.title), text('p', note.text), text('strong', note.warning));
     $('results-status').textContent = results.length + (results.length === 1 ? ' resource' : ' resources');
-    $('resource-results').replaceChildren(...results.map(r => {
+    const isNews = subcategory.value === 'news';
+    const dateKey = r => /^\d{4}(-\d{2}-\d{2})?$/.test(r.publicationDate || '') ? r.publicationDate : '';
+    const ordered = isNews ? [...results].sort((a, b) => dateKey(b).localeCompare(dateKey(a))) : results;
+    const cards = ordered.map(r => {
       const article = document.createElement('article');
       article.append(text('h2', r.title), text('p', r.description));
+      if (r.availabilityNote) article.append(text('p', r.availabilityNote));
       if (r.contentWarning) article.append(text('strong', r.contentWarning));
       const meta = document.createElement('dl');
       const c = catalog.categories.find(c => c.id === r.category);
@@ -57,11 +61,27 @@
       for (const [label, value] of Object.entries({Category: c?.title, Subcategory: s?.title, Type: catalog.types[r.type], Language: r.language, 'Source or author': r.source, Subject: r.subject})) {
         meta.append(text('dt', label), text('dd', value || 'Not specified'));
       }
+      if (r.subcategory === 'news') {
+        meta.append(text('dt', 'Publication date'), text('dd', r.publicationDate ? r.publicationDate + ' — ' + r.dateSource : 'Not provided'));
+      }
       const a = text('a', r.linkLabel || (r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource')); a.href = safeURL(r.url);
       if (r.openInNewTab) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
       a.className = 'button'; a.setAttribute('aria-label', a.textContent + ': ' + r.title + (r.openInNewTab ? ' (opens in a new tab)' : ''));
       article.append(meta, a); return article;
-    }));
+    });
+    const content = [];
+    let previousGroup = null;
+    cards.forEach((card, index) => {
+      if (isNews) {
+        const group = dateKey(ordered[index]) ? 'Dated articles — supplied dates unverified' : 'Undated articles and publications';
+        if (group !== previousGroup) {
+          const heading = text('h2', group); heading.className = 'resource-date-heading';
+          content.push(heading); previousGroup = group;
+        }
+      }
+      content.push(card);
+    });
+    $('resource-results').replaceChildren(...content);
     $('library-empty').hidden = results.length > 0;
     $('library-empty').textContent = catalog.resources.length ? 'No resources match these filters. Try another search or category.' : 'No materials have been published in this catalog yet. Existing study topics are preserved on the homepage.';
     const url = new URL(location.href); url.search = '';

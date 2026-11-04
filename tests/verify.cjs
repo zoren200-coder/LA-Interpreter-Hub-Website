@@ -19,10 +19,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 34, 'Thirty-four unique original-source references');
+    assert.equal(catalog.resources.length, 44, 'Forty-four unique original-source references');
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 34);
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 34);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 44);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 44);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
@@ -128,11 +128,40 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           assert.equal(await page.locator('#resource-results article').count(), 1);
           assert(!(await page.locator('#resource-section-note').isVisible()));
           assert.equal(await page.locator('#resource-results article a').getAttribute('href'), 'https://drive.google.com/file/d/12JlpqTv23vIca_BjluA4kp9gOCNxQ79S/view?usp=drive_link');
+        } else if (sub.id === 'news') {
+          assert.equal(await page.locator('#resource-results article').count(), 10);
+          assert.deepEqual(await page.locator('.resource-date-heading').allTextContents(), ['Dated articles — supplied dates unverified', 'Undated articles and publications']);
+          const order = await page.locator('#resource-results article h2').allTextContents();
+          assert.equal(order[0], 'Trump Administration and Green Cards Abroad – NPR (2026)');
+          assert.equal(order[4], 'Would You Like Some Cheese With Your Whine? – Athena Sky Interpreting');
+          const records = catalog.resources.filter(r => r.subcategory === 'news');
+          assert.equal(records.length, 10);
+          assert.equal(records.filter(r=>r.publicationDate).length, 5);
+          for (const record of records) {
+            await page.locator('#resource-search').fill(record.title);
+            assert.equal(await page.locator('#resource-results article').count(), 1);
+            assert.equal(await page.locator('#resource-results article h2').textContent(), record.title);
+            assert.equal(await page.locator('#resource-results article a').textContent(), 'Read Article');
+            assert.equal(await page.locator('#resource-results article a').getAttribute('href'), record.url);
+            assert.equal(await page.locator('#resource-results article a').getAttribute('target'), '_blank');
+          }
+          assert((await page.locator('#resource-results article').textContent()).includes('Publication date'));
+          await page.locator('#resource-search').fill('Inside the Interpreter');
+          assert((await page.locator('#resource-results article').textContent()).includes('Commercial book listing'));
+          await page.locator('#resource-search').fill('');
+          await page.locator('#resource-subject').selectOption('Immigration');
+          assert.equal(await page.locator('#resource-results article').count(), 2);
+          await page.locator('#resource-search').fill('asylum');
+          assert.equal(await page.locator('#resource-results article').count(), 1);
+          await page.locator('#resource-search').fill('');
+          await page.locator('#resource-subject').selectOption('Research and Publications');
+          assert.equal(await page.locator('#resource-results article').count(), 2);
+          assert.deepEqual(await page.locator('.resource-date-heading').allTextContents(), ['Undated articles and publications']);
         } else assert(await page.locator('#library-empty').isVisible());
       }
     }
     await open('resources.html');
-    assert.equal(await page.locator('#resource-results article').count(), 34);
+    assert.equal(await page.locator('#resource-results article').count(), 44);
     await page.locator('#resource-search').fill('Miranda');
     assert.equal(await page.locator('#resource-results article').count(), 1, 'Cross-list is not a duplicate global result');
     console.log('All navigation destinations and 11 subcategory views load; 6 Arabic listings and unique global results verified.');
@@ -184,6 +213,9 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       await open('resources.html?category=knowledge&subcategory=training');
       assert.equal(await page.locator('#resource-results article').count(), 12);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Training library overflow ' + width);
+      await open('resources.html?category=knowledge&subcategory=news');
+      assert.equal(await page.locator('#resource-results article').count(), 10);
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'News overflow ' + width);
     }
     console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 9 viewport widths.');
     await open('index.html');

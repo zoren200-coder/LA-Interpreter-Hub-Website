@@ -2,8 +2,8 @@
 
 `resources.js` is the single catalog for navigation, categories, and resource records.
 Each category/subcategory ID is stable and is used in shareable `resources.html` URLs.
-The catalog contains 34 unique published original-source references supplied by the site owner:
-14 Spanish ↔ English, 3 Vietnamese ↔ English, 6 Arabic ↔ English, and 12 training listings.
+The catalog contains 44 unique published original-source references supplied by the site owner:
+14 Spanish ↔ English, 3 Vietnamese ↔ English, 6 Arabic ↔ English, and 12 training and 10 Articles & News listings.
 The owner confirmed public-link sharing for the training Drive guide; no files are rehosted.
 Miranda Warnings is cross-listed between Spanish and Arabic using one record and URL. The owner
 confirmed both Google Drive files use “Anyone with the link” sharing; neither file is rehosted. These are
@@ -21,6 +21,9 @@ Add actual records to `resources` with these fields:
 - `url`: existing relative file location or HTTPS URL; do not invent links.
 - `linkLabel`, `openInNewTab`: optional link label and safe new-tab behavior.
 - `sharingPermission`: owner-provided sharing confirmation, when available.
+- `publicationDate`: optional supplied ISO date or year only (do not invent a month/day).
+- `dateSource`: provenance and verification status; report edition years do not establish publication dates.
+- `availabilityNote`: optional commercial listing or access-requirement note.
 - `contentWarning`: optional warning shown on the resource card.
 - `sectionNotes`: catalog-level practice guidance keyed by subcategory.
 - `additionalListings`: optional section-specific category, subcategory, title, description,
