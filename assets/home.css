@@ -12,3 +12,14 @@
 @media(max-width:850px){.hero-inner{grid-template-columns:1fr;gap:32px}.hero-features{width:100%}}
 @media(max-width:600px){.hero-features{margin-top:30px}.feature-card{padding:22px}.feature-heading h2{font-size:24px}}
 @media(prefers-reduced-motion:reduce){.feature-card{transition:none}.feature-card:hover{transform:none}}
+
+.social-section{display:flex;justify-content:flex-end;padding-top:36px}
+.social-box{width:min(100%,420px);padding:24px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:9px;box-shadow:0 4px 16px #142f4808}
+.social-box h2{font-size:25px;margin:0 0 17px}
+.social-links{display:flex;flex-wrap:wrap;gap:10px 16px}
+.social-links a{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:5px 0;color:var(--navy);font-size:13px;font-weight:600;text-decoration:none}
+.social-links a:hover{color:var(--green);text-decoration:underline}
+.social-links svg{width:21px;height:21px;flex-shrink:0;fill:currentColor}
+.social-links .social-outline{fill:none;stroke:currentColor;stroke-width:1.8}
+.social-links .social-dot{fill:currentColor;stroke:none}
+@media(max-width:600px){.social-section{padding-top:28px}.social-box{width:100%;padding:20px}.social-box h2{font-size:24px}}
