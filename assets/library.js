@@ -52,23 +52,13 @@
     const ordered = isNews ? [...results].sort((a, b) => dateKey(b).localeCompare(dateKey(a))) : results;
     const cards = ordered.map(r => {
       const article = document.createElement('article');
-      article.append(text('h2', r.title), text('p', r.description));
-      if (r.availabilityNote) article.append(text('p', r.availabilityNote));
-      if (r.contentWarning) article.append(text('strong', r.contentWarning));
-      const meta = document.createElement('dl');
-      const c = catalog.categories.find(c => c.id === r.category);
-      const s = c?.subcategories.find(s => s.id === r.subcategory);
-      for (const [label, value] of Object.entries({Category: c?.title, Subcategory: s?.title, Type: catalog.types[r.type], Language: r.language, 'Source or author': r.source, Subject: r.subject})) {
-        meta.append(text('dt', label), text('dd', value || 'Not specified'));
-      }
-      if (r.subcategory === 'news') {
-        meta.append(text('dt', 'Publication date'), text('dd', r.publicationDate ? r.publicationDate + ' — ' + r.dateSource : 'Not provided'));
-      }
+      article.append(text('h2', r.title));
+      if (r.description) article.append(text('p', r.description));
       const a = text('a', r.linkLabel || (r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource')); a.href = safeURL(r.url);
       if (r.download) a.download = r.download;
       if (r.openInNewTab) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
       a.className = 'button'; a.setAttribute('aria-label', a.textContent + ': ' + r.title + (r.openInNewTab ? ' (opens in a new tab)' : ''));
-      article.append(meta, a); return article;
+      article.append(a); return article;
     });
     const content = [];
     let previousGroup = null;

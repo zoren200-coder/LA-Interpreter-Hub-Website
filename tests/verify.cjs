@@ -13,6 +13,9 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       const response = await page.goto(base + '/' + path);
       assert.equal(response.status(), 200, path);
       await page.waitForFunction(() => document.querySelector('#navigation details'));
+      assert.equal(await page.locator('#resource-results article dl, #resource-results article dt, #resource-results article dd').count(), 0);
+      assert(await page.locator('#resource-results article').evaluateAll(cards => cards.every(card => [...card.children].every(child => ['H2','P','A'].includes(child.tagName)))));
+
     };
     await open('index.html');
     const catalog = await page.evaluate(() => window.HUB_CATALOG);
@@ -108,7 +111,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           assert(await page.locator('#resource-section-note').isVisible());
           assert((await page.locator('#resource-section-note').textContent()).includes('rest every 30 minutes!!'));
           assert((await page.locator('#resource-section-note').textContent()).includes('violent content'));
-          assert.equal(await page.locator('#resource-results article > strong').count(), 9);
+          assert.equal(await page.locator('#resource-results article > strong').count(), 0);
           const records = catalog.resources.filter(r => r.subcategory === 'training');
           assert.equal(records.length, 12);
           for (const record of records) {
@@ -145,9 +148,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
             assert.equal(await page.locator('#resource-results article a').getAttribute('href'), record.url);
             assert.equal(await page.locator('#resource-results article a').getAttribute('target'), '_blank');
           }
-          assert((await page.locator('#resource-results article').textContent()).includes('Publication date'));
+          assert.equal(await page.locator('#resource-results article dl, #resource-results article dt, #resource-results article dd').count(), 0);
           await page.locator('#resource-search').fill('Inside the Interpreter');
-          assert((await page.locator('#resource-results article').textContent()).includes('Commercial book listing'));
+          assert(!(await page.locator('#resource-results article').textContent()).includes('Commercial book listing'));
+          assert(catalog.resources.find(r=>r.id==='inside-interpreters-mind').availabilityNote.includes('Commercial book listing'));
           await page.locator('#resource-search').fill('');
           await page.locator('#resource-subject').selectOption('Immigration');
           assert.equal(await page.locator('#resource-results article').count(), 2);
@@ -299,6 +303,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     console.log('Top-level dropdowns, keyboard controls, logo and layouts pass at 9 viewport widths.');
     await open('index.html');
     assert.equal(await page.locator('.card').count(), 3);
+    assert.equal(await page.locator('.card .tag:visible').count(), 0);
     await page.locator('#search').fill('confidentiality');
     assert.equal(await page.locator('.card:visible').count(), 1);
     await page.locator('.card:visible summary').click();
@@ -335,7 +340,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     await page.locator('#resource-category').selectOption('knowledge');
     await page.locator('#resource-subcategory').selectOption('spanish-english');
     assert.equal(await page.locator('#resource-results article h2').textContent(), 'Alpha');
-    assert.equal(await page.locator('#resource-results dd').allTextContents().then(a=>a.join('|')), 'Resources and Knowledge|Spanish ↔ English Resources|PDF|Spanish|Test author|Not specified');
+    assert.equal(await page.locator('#resource-results dd').count(), 0);
     assert.equal(errors.length, 0, errors.join('\n'));
     console.log('Search, combined category/language/type filters, metadata rendering and review/unsafe-link exclusion pass. No JavaScript errors.');
   } finally { await browser.close(); }
