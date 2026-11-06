@@ -26,7 +26,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
     assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 55);
     assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 55);
-    assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Upcoming Events', 'Interpreter Directory', 'Search']);
+    assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
     for (const url of links) {

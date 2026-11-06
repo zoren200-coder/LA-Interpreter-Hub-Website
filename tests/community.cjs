@@ -8,13 +8,29 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
   const open=async path=>{const r=await page.goto(base+'/'+path);assert.equal(r.status(),200);};
   for(const width of [320,375,768,850,851,1024,1440,1920]){
    await page.setViewportSize({width,height:1000});
-   for(const path of ['events.html','directory.html']){
-    await open(path);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-    if(width<=850)await page.locator('.menu').click();
-    for(const [label,target] of [['Upcoming Events','events.html'],['Interpreter Directory','directory.html']]){
-     const a=page.locator('#navigation').getByRole('link',{name:label,exact:true});assert(await a.isVisible());assert.equal(await a.getAttribute('href'),target);
-    }
-    if(width<=850){await page.locator('#navigation').getByRole('link',{name:path==='events.html'?'Interpreter Directory':'Upcoming Events',exact:true}).click();assert.equal(await page.locator('.menu').getAttribute('aria-expanded'),'false');}
+   await open('index.html');
+   if(width<=850)await page.locator('.menu').click();
+   assert.equal(await page.locator('#navigation a[href="events.html"], #navigation a[href="directory.html"]').count(),0);
+   assert.equal(await page.locator('.hero-note').count(),0);
+   assert(!(await page.locator('body').textContent()).includes('Many languages.'));
+   const left=await page.locator('.hero-inner > div').boundingBox();
+   const features=await page.locator('.hero-features').boundingBox();
+   const search=await page.locator('.library-tools').boundingBox();
+   assert(features.y+features.height < search.y, 'Feature boxes do not overlap search');
+   if(width>850)assert(features.x>=left.x+left.width, 'Desktop features to right of hero content');
+   else assert(features.y>=left.y+left.height, 'Small-screen features below hero content');
+   const boxes=await page.locator('.feature-card').all();assert.equal(boxes.length,2);
+   const first=await boxes[0].boundingBox(), second=await boxes[1].boundingBox();assert(first.y+first.height<second.y);
+   if(width<=850)await page.locator('.menu').click();
+   for(const [selector,path] of [['.feature-events','events.html'],['.feature-directory','directory.html']]){
+    await open('index.html');const box=page.locator(selector);assert(await box.isVisible());
+    assert.equal(await box.getAttribute('href'),path);
+    // The button-styled label and the card share one keyboard-accessible anchor.
+    assert.equal(await box.locator('a,button').count(),0);
+    await box.focus();await Promise.all([page.waitForURL('**/'+path),page.keyboard.press('Enter')]);assert(page.url().endsWith('/'+path));
+    assert.equal(await page.locator('#navigation a[href="events.html"], #navigation a[href="directory.html"]').count(),0);
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+    await open('index.html');await Promise.all([page.waitForURL('**/'+path),page.locator(selector+' .feature-action').click()]);assert(page.url().endsWith('/'+path));
    }
   }
   await open('events.html');assert.equal(await page.locator('#upcoming-results article').count(),0);
@@ -27,7 +43,7 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
   assert(!await page.locator('#directory-request').getAttribute('action'));
   assert.equal(await page.locator('#directory-request').evaluate(form=>{const e=new Event('submit',{cancelable:true});return !form.dispatchEvent(e)}),true);
   assert.deepEqual(await page.evaluate(()=>({events:HUB_COMMUNITY.events,interpreters:HUB_COMMUNITY.interpreters})),{events:[],interpreters:[]});
-  console.log('Empty catalogs, responsive new navigation and inactive consent form pass.');
+  console.log('Responsive homepage feature boxes, keyboard/button links, navigation removal, empty catalogs and inactive consent form pass.');
   // Synthetic test records only: intercepted in-memory, never in public page data.
   const event=(id,startAt,type='Webinar')=>({id,title:'TEST ONLY '+id,type,startAt,timeZone:'America/Chicago',location:'Online',organizer:'Test organizer',description:'Test description',url:'https://example.org/'+id});
   const profile=(name,changes={})=>({id:name,name,languages:['Spanish ↔ English'],specializations:['Court'],credentials:['Member supplied credential'],serviceArea:'Test city',availability:'Remote',website:'https://example.org/profile',contactURL:'https://example.org/contact',contactAuthorized:true,approved:true,publicationAuthorized:true,...changes});

@@ -38,15 +38,3 @@
 .resource-results .button{margin-top:12px;max-width:100%;gap:8px}
 
 .resource-date-heading{grid-column:1/-1;margin:16px 0 0;font-size:26px}
-
-@media(min-width:851px){
-  #navigation{grid-template-columns:auto minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,1.55fr) auto auto}
-  #navigation>a[href="events.html"]{grid-column:2/4;grid-row:2;text-align:center}
-  #navigation>a[href="directory.html"]{grid-column:4/6;grid-row:2;text-align:center}
-  #navigation>.nav-search{grid-column:6;grid-row:2}
-}
-@media(min-width:1500px){
-  .header-nav .wrap{width:min(1520px,calc(100% - 48px))}
-  #navigation{grid-template-columns:auto minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,1.55fr) auto auto auto auto}
-  #navigation>a[href="events.html"],#navigation>a[href="directory.html"],#navigation>.nav-search{grid-column:auto;grid-row:auto}
-}
