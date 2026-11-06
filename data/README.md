@@ -2,8 +2,8 @@
 
 `resources.js` is the single catalog for navigation, categories, and resource records.
 Each category/subcategory ID is stable and is used in shareable `resources.html` URLs.
-The catalog contains 55 unique published resource records supplied by the site owner:
-14 Spanish ↔ English, 3 Vietnamese ↔ English, 6 Arabic ↔ English, and 12 training, 10 Articles & News, and 5 General Resources and 3 Ethics and Professional Practice, and 3 Official Documents listings.
+The catalog contains 61 unique published resource records supplied by the site owner:
+14 Spanish ↔ English, 3 Vietnamese ↔ English, 6 Arabic ↔ English, and 12 training, 10 Articles & News, and 5 General Resources and 3 Ethics and Professional Practice, and 3 Official Documents and 6 Position Papers & White Papers listings.
 The owner confirmed public-link sharing for the training Drive guide; no files are rehosted.
 Miranda Warnings is cross-listed between Spanish and Arabic using one record and URL. The owner
 confirmed both Google Drive files use “Anyone with the link” sharing; neither file is rehosted. These are
@@ -51,3 +51,7 @@ and filters using temporary in-memory test records. No test records enter the ca
 Official Documents includes two owner-authorized local PDFs in `documents/official/`.
 Their `download` fields preserve filenames; `sha256` records original-byte integrity.
 The LPOR link remains externally hosted and unverified.
+
+Position papers include four unchanged uploads in `documents/position-papers/`, with
+filenames preserved, SHA-256 integrity metadata and public view links. Owner authorization
+and the onsite paper’s embedded reprint permission are documented in POSITION_PAPERS_IMPORT_REPORT.md.
