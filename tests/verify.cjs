@@ -13,6 +13,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       const response = await page.goto(base + '/' + path);
       assert.equal(response.status(), 200, path);
       await page.waitForFunction(() => document.querySelector('#navigation details'));
+      assert(await page.locator('#resource-results > article').evaluateAll(cards => cards.every(card => card.firstElementChild?.classList.contains('resource-kind') && card.firstElementChild.textContent.trim())));
       assert.equal(await page.locator('#resource-results article dl, #resource-results article dt, #resource-results article dd').count(), 0);
       assert(await page.locator('#resource-results article').evaluateAll(cards => cards.every(card => [...card.children].every(child => ['H2','P','A'].includes(child.tagName) || (card.classList.contains('training-video-group') && child.tagName === 'UL')))));
 
@@ -23,6 +24,13 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
     assert.equal(catalog.resources.length, 61, 'Sixty-one unique resource records');
+    const kinds = ['Article', 'Dictionary', 'Glossary', 'Reference Guide', 'Training Resource', 'Video', 'Official Document'];
+    assert(catalog.resources.every(r => kinds.includes(r.resourceKind)), 'Every resource has one of the seven requested classifications');
+    assert.deepEqual([...new Set(catalog.resources.map(r => r.resourceKind))].sort(), [...kinds].sort());
+    assert(catalog.resources.filter(r => r.type === 'video').every(r => r.resourceKind === 'Video'));
+    for (const [id, kind] of [['rae','Dictionary'], ['irs-tax-glossary','Glossary'], ['wu-simultaneous-tips','Article'], ['i485-translation-project','Reference Guide'], ['confident-interpreter','Training Resource'], ['language-access-board-hr8604','Official Document']]) {
+      assert.equal(catalog.resources.find(r => r.id === id).resourceKind, kind);
+    }
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
     assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 61);
     assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 61);
@@ -272,6 +280,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     }
     await open('resources.html');
     assert.equal(await page.locator('#resource-results article').count(), 61);
+    assert.deepEqual(await page.locator('#resource-results > article > .resource-kind').allTextContents(), catalog.resources.map(r => r.resourceKind));
     await page.locator('#resource-search').fill('Miranda');
     assert.equal(await page.locator('#resource-results article').count(), 1, 'Cross-list is not a duplicate global result');
     console.log('All navigation destinations and 11 subcategory views load; 6 Arabic listings and unique global results verified.');
