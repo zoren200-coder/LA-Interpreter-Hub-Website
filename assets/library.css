@@ -38,3 +38,9 @@
 .resource-results .button{margin-top:12px;max-width:100%;gap:8px}
 
 .resource-date-heading{grid-column:1/-1;margin:16px 0 0;font-size:26px}
+
+.training-video-group{grid-column:1/-1}
+.training-video-group ul{margin:20px 0 0;padding-left:22px}
+.training-video-group li{padding:8px 0}
+.training-video-group a{display:inline-block;padding:4px 0;font-weight:600;text-underline-offset:3px}
+.training-video-group .video-content-warning{font-weight:bold}
