@@ -59,7 +59,8 @@
     if (subcategory.value === 'training') noteBox.hidden = true;
     const cards = ordered.map(r => {
       const article = document.createElement('article');
-      article.append(kindLabel(r.resourceKind || 'Reference Guide'), text('h2', r.title));
+      if (r.resourceKind) article.append(kindLabel(r.resourceKind));
+      article.append(text('h2', r.title));
       if (r.description) article.append(text('p', r.description));
       const a = text('a', r.linkLabel || (r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource')); a.href = safeURL(r.url);
       if (r.download) a.download = r.download;
