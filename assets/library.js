@@ -50,6 +50,8 @@
     const isNews = subcategory.value === 'news';
     const dateKey = r => /^\d{4}(-\d{2}-\d{2})?$/.test(r.publicationDate || '') ? r.publicationDate : '';
     const ordered = isNews ? [...results].sort((a, b) => dateKey(b).localeCompare(dateKey(a))) : results;
+    const trainingVideos = subcategory.value === 'training' ? ordered.filter(r => r.type === 'video') : [];
+    if (subcategory.value === 'training') noteBox.hidden = true;
     const cards = ordered.map(r => {
       const article = document.createElement('article');
       article.append(text('h2', r.title));
@@ -61,6 +63,30 @@
       article.append(a); return article;
     });
     const content = [];
+    let videoGroup;
+    if (trainingVideos.length) {
+      videoGroup = document.createElement('article');
+      videoGroup.className = 'training-video-group';
+      videoGroup.append(text('h2', 'Videos: simultaneous trial practice'));
+      videoGroup.append(text('p', 'Practice simultaneous interpreting with these trial recordings and courtroom-related videos.'));
+      if (note) {
+        videoGroup.append(text('p', note.text));
+        const warning = text('p', note.warning);
+        warning.className = 'video-content-warning';
+        videoGroup.append(warning);
+      }
+      const list = document.createElement('ul');
+      trainingVideos.forEach(r => {
+        const item = document.createElement('li');
+        const link = text('a', r.title);
+        link.href = safeURL(r.url);
+        link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', r.title + ' (opens in a new tab)');
+        item.append(link); list.append(item);
+      });
+      videoGroup.append(list);
+    }
+    let videosPlaced = false;
     let previousGroup = null;
     cards.forEach((card, index) => {
       if (isNews) {
@@ -70,7 +96,9 @@
           content.push(heading); previousGroup = group;
         }
       }
-      content.push(card);
+      if (videoGroup && ordered[index].type === 'video') {
+        if (!videosPlaced) { content.push(videoGroup); videosPlaced = true; }
+      } else content.push(card);
     });
     $('resource-results').replaceChildren(...content);
     $('library-empty').hidden = results.length > 0;
