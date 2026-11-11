@@ -38,3 +38,9 @@
 .feedback-callout{margin-top:20px;grid-template-columns:minmax(0,1fr) auto;align-items:center}
 .feedback-callout p{margin-bottom:0}
 @media(max-width:600px){.feedback-callout{grid-template-columns:1fr}.feedback-callout .button{justify-self:start}}
+
+.interpreter-discussions>div:first-child>.button{margin-top:8px;gap:10px}
+.discussion-topic-links{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.discussion-topic-links li{margin:0}
+.discussion-topic-links a{display:block;padding:9px 12px;background:#fff;border:1px solid #cfdae2;border-radius:5px;font-size:13px;font-weight:600;text-decoration:none;line-height:1.4}
+.discussion-topic-links a:hover{border-color:var(--green);color:var(--green);text-decoration:underline}
