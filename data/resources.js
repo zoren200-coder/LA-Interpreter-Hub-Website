@@ -444,6 +444,25 @@ window.HUB_CATALOG = {
     "openInNewTab": true
   },
   {
+    "id": "i485-translation-project",
+    "title": "Form I-485 (Spanish Reference Guide)",
+    "url": "https://drive.google.com/file/d/12JlpqTv23vIca_BjluA4kp9gOCNxQ79S/view?usp=drive_link",
+    "description": "A bilingual reference guide containing English–Spanish translations of selected questions from USCIS Form I-485. Covers removal and deportation proceedings, criminal history, immigration violations, human trafficking, money laundering, and national security matters. A useful preparation resource for interpreters and translators working in immigration interviews and legal proceedings.",
+    "type": "document",
+    "source": null,
+    "subject": "Immigration interview preparation",
+    "category": "knowledge",
+    "subcategory": "training",
+    "language": "English / Spanish",
+    "status": "published",
+    "metadataSource": "User-supplied training catalog; video descriptions based only on supplied titles",
+    "accessStatus": "Unverified: external access is restricted in the execution environment",
+    "distribution": "Original-source link only; no document or video copied",
+    "linkLabel": "View Resource",
+    "openInNewTab": true,
+    "sharingPermission": "Anyone with the link; public linking confirmed by owner"
+  },
+  {
     "id": "casey-anthony-opening-1",
     "title": "Casey Anthony Trial : Day 1, Part 1 : Opening Arguments",
     "url": "https://www.youtube.com/watch?v=oILRGY4obtA",
@@ -613,25 +632,6 @@ window.HUB_CATALOG = {
     "linkLabel": "View Resource",
     "openInNewTab": true,
     "contentWarning": "Warning: these videos have some violent content."
-  },
-  {
-    "id": "i485-translation-project",
-    "title": "Form I-485 Translation Project – English–Spanish Immigration Reference Guide",
-    "url": "https://drive.google.com/file/d/12JlpqTv23vIca_BjluA4kp9gOCNxQ79S/view?usp=drive_link",
-    "description": "A bilingual reference guide containing English–Spanish translations of selected questions from USCIS Form I-485. Covers removal and deportation proceedings, criminal history, immigration violations, human trafficking, money laundering, and national security matters. A useful preparation resource for interpreters and translators working in immigration interviews and legal proceedings.",
-    "type": "document",
-    "source": null,
-    "subject": "Immigration interview preparation",
-    "category": "knowledge",
-    "subcategory": "training",
-    "language": "English / Spanish",
-    "status": "published",
-    "metadataSource": "User-supplied training catalog; video descriptions based only on supplied titles",
-    "accessStatus": "Unverified: external access is restricted in the execution environment",
-    "distribution": "Original-source link only; no document or video copied",
-    "linkLabel": "View Resource",
-    "openInNewTab": true,
-    "sharingPermission": "Anyone with the link; public linking confirmed by owner"
   },
   {
     "id": "ata-industry-news",
