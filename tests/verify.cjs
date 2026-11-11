@@ -342,13 +342,26 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     await open('index.html');
     await page.locator('#category').selectOption('ethics');
     assert.equal(await page.locator('.card:visible').count(), 1);
-    await page.locator('.card:visible summary').click();
-    assert(await page.locator('.card:visible details').evaluate(el => el.open));
+    assert.equal(await page.locator('.card:visible .resource-card-link').getAttribute('href'), 'resources.html?category=ethics');
     await page.locator('#category').selectOption('training');
     assert.equal(await page.locator('.card:visible').count(), 1);
-    assert.equal(await page.locator('.thread').count(), 3);
+    await page.locator('#category').selectOption('all');
+    const destinations = ['resources.html?category=knowledge', 'resources.html?category=ethics', 'resources.html?category=knowledge&subcategory=training'];
+    assert.deepEqual(await page.locator('.resource-card-link').evaluateAll(links => links.map(a => a.getAttribute('href'))), destinations);
+    for (let i = 0; i < destinations.length; i++) {
+      await open('index.html');
+      await page.locator('.resource-card-link').nth(i).click();
+      await page.waitForFunction(() => document.querySelectorAll('#resource-results article').length > 0);
+      assert.equal(await page.locator('#resource-category').inputValue(), i === 1 ? 'ethics' : 'knowledge');
+      if (i === 2) assert.equal(await page.locator('#resource-subcategory').inputValue(), 'training');
+    }
+    await open('index.html');
+    assert.equal(await page.locator('.thread, .reply, #community-note, .card details').count(), 0);
+    assert(await page.locator('#community-topics').isVisible());
+    assert.equal(await page.locator('#community-topics a, #community-topics button, #community-topics input').count(), 0);
+    assert.equal(await page.locator('#community .community-actions a').count(), 3);
     assert(await page.locator('#about').count());
-    console.log('Existing homepage topics, filters, disclosure content, community preview and About remain accessible.');
+    console.log('Homepage resource links, category filters, social channels, future discussion space and About verified.');
     await open('resources.html#resource-search');
     assert.equal(await page.evaluate(() => document.activeElement.id), 'resource-search');
     // Synthetic test data stays in this browser context; it is not a real catalog.
