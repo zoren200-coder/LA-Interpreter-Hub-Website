@@ -48,6 +48,10 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
         assert.equal(await page.locator('#resource-subcategory').inputValue(), sub.id);
         if (sub.id === 'spanish-english') {
           assert.equal(await page.locator('#resource-results article').count(), 14);
+          assert.deepEqual(await page.locator('#resource-results > article > .resource-kind').allTextContents(), [
+            'Glossary', 'Article', 'Dictionary', 'Dictionary', 'Dictionary', 'Glossary', 'Glossary',
+            'Glossary', 'Glossary', 'Glossary', 'Reference Guide', 'Glossary', 'Dictionary', 'Glossary'
+          ]);
           for (const [id, subject, url] of [
             ['maritime-dictionary', 'Maritime', 'https://drive.google.com/file/d/1mZufRauXg89ij-v6uobB3cBc8sh83fsl/view?usp=drive_link'],
             ['i485-questionnaire-glossary', 'Immigration', 'https://drive.google.com/file/d/15y68EvDwaJn0sTCq-pzg_rWbofDLDdwg/view?usp=sharing']
