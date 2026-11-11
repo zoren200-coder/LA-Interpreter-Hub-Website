@@ -24,6 +24,7 @@ window.HUB_CATALOG = {
   resources: [
   {
     "id": "irs-tax-glossary",
+    "resourceKind": "Glossary",
     "title": "Publication 850 (EN-SP) (08/2018), English- Spanish Glossary of Tax Words and Phrases",
     "description": "English–Spanish glossary of tax words and phrases.",
     "url": "https://www.irs.gov/publications/p850ensp",
@@ -40,6 +41,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "babbel-onomatopeyas",
+    "resourceKind": "Article",
     "title": "Las onomatopeyas en español: una oda a estos creativos y sucintos recursos lingüísticos",
     "description": "Un recurso expresivo formidable que sintetiza una situación o concepto. Aquí te contamos su discreta complejidad y te proponemos onomatopeyas del español para todos los sonidos que puedas imaginar.",
     "url": "https://es.babbel.com/es/magazine/onomatopeyas-en-espanol",
@@ -56,6 +58,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "rae",
+    "resourceKind": "Dictionary",
     "title": "Real Academia Española",
     "description": "Sitio web oficial de la Real Academia Española que ofrece acceso gratuito a diccionarios, consultas lingüísticas, recursos gramaticales y ortográficos, publicaciones y herramientas de referencia para resolver dudas sobre el significado y el uso correcto del español.",
     "url": "https://www.rae.es/",
@@ -72,6 +75,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "merriam-webster",
+    "resourceKind": "Dictionary",
     "title": "Merriam-Webster",
     "description": "An online English-language reference resource offering free access to definitions, synonyms, antonyms, pronunciations, usage examples, etymologies, and grammar resources. A valuable tool for expanding vocabulary, understanding nuances in English, and improving language proficiency.",
     "url": "https://www.merriam-webster.com/",
@@ -88,6 +92,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "venezuelan-slang",
+    "resourceKind": "Dictionary",
     "title": "Venezuelan Slang Dictionary",
     "description": "An online glossary of Venezuelan Spanish slang, colloquial expressions, and regional vocabulary, featuring English definitions, usage examples, and pronunciation notes. A useful reference for interpreters seeking to understand informal Venezuelan speech, cultural expressions, and regional linguistic differences.",
     "url": "https://alasdairbaverstock.com/dictionariesglossaries/2020/2/7/venezuelan-slang-dictionary",
@@ -104,6 +109,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "ssa-glossary",
+    "resourceKind": "Glossary",
     "title": "Glossary of Social Security Terms",
     "description": "An official glossary provided by the U.S. Social Security Administration, featuring definitions of terminology related to Social Security benefits, retirement, disability, Supplemental Security Income (SSI), and other federal programs. A valuable reference for interpreters working in legal, medical, and government settings who need to understand specialized Social Security terminology.",
     "url": "https://www.ssa.gov/agency/glossary/",
@@ -120,6 +126,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "wikibooks-spanish-slang",
+    "resourceKind": "Glossary",
     "title": "Spanish/Slang",
     "description": "A collaborative online reference featuring Spanish slang, colloquial expressions, and informal vocabulary from different Spanish-speaking countries and regions. A useful resource for interpreters seeking to understand regional language variations, everyday expressions, and cultural nuances in spoken Spanish.",
     "url": "https://en.wikibooks.org/wiki/Spanish/Slang",
@@ -136,6 +143,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "judicial-council-glossary",
+    "resourceKind": "Glossary",
     "title": "Judicial Council Glossary of Terms and Phrases : Glossary of Terms",
     "description": "A reference glossary of legal and judicial terminology designed to support the understanding of terms and phrases commonly used in court proceedings and legal documents. A useful resource for court interpreters, translators, and legal professionals seeking to strengthen their familiarity with legal terminology.",
     "url": "https://docs.google.com/spreadsheets/u/0/d/e/2PACX-1vRsrZ6JMCOogr5ZL58iVDLXgkCktfDL_SdoN5Vjwmq7M_B1lBh-lOziMYmH1a126YkDRBx6P5G49FXl/pubhtml?gid=1277344180&single=true&pli=1",
@@ -152,6 +160,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "nyc-spanish-legal-glossary",
+    "resourceKind": "Glossary",
     "title": "A Spanish Glossary for New York City",
     "description": "An English–Spanish glossary containing 640 legal and criminal justice terms, developed by the Vera Institute of Justice in 2007. Covers courtroom proceedings, criminal offenses, law enforcement, juvenile justice, corrections, and probation and parole. A valuable reference for court interpreters, translators, and bilingual legal professionals.",
     "url": "https://www.nycourts.gov/d10files/2018-05/translatingJustice_Spanish.pdf",
@@ -168,6 +177,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "puerto-rico-legal-glossary",
+    "resourceKind": "Glossary",
     "title": "Poder Judicial de Puerto Rico",
     "description": "Recurso de consulta en español que ofrece definiciones y explicaciones de términos jurídicos y conceptos relacionados con el sistema judicial de Puerto Rico. Una herramienta útil para intérpretes judiciales, traductores y profesionales del ámbito legal que deseen ampliar sus conocimientos de terminología jurídica.",
     "url": "https://poderjudicial.pr/educacion-a-la-comunidad/glosario-de-terminos-juridicos-y-conceptos-relacionados-al-poder-judicial/",
@@ -184,6 +194,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "miranda-translations",
+    "resourceKind": "Reference Guide",
     "title": "Miranda Warning Translations",
     "description": "A free multilingual resource providing professionally translated Miranda warnings in several languages, including Spanish, Portuguese, Chinese, Arabic, Russian, and Haitian Creole. Developed collaboratively by certified and credentialed interpreters and translators, the website offers downloadable PDFs, audio recordings, and best-practice guidelines for communicating legal rights to individuals with limited English proficiency.",
     "url": "https://www.mirandawarningstranslations.com/",
@@ -211,6 +222,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "dol-glossary",
+    "resourceKind": "Glossary",
     "title": "U.S. Department of Labor Glossary",
     "description": "An official bilingual glossary published by the U.S. Department of Labor, featuring terminology related to employment, labor laws, workers’ rights, wages, benefits, workplace safety, and government programs. Organized in both English–Spanish and Spanish–English sections, this 73-page resource is particularly useful for interpreters and translators working in labor, employment, administrative, and legal settings.",
     "url": "https://www.dol.gov/sites/dolgov/files/general/Spanish-English-Glossary.pdf",
@@ -227,6 +239,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "maritime-dictionary",
+    "resourceKind": "Dictionary",
     "title": "Maritime Spanish-English Dictionary",
     "description": "A bilingual glossary of specialized maritime terminology developed by Íria González Liaño and Ana López Pampín of the Universidade da Coruña, Spain. Covers maritime transportation, shipping contracts, cargo handling, insurance, and commercial shipping operations. Includes English–Spanish and Spanish–English terminology, making it a valuable reference for interpreters and translators working in maritime and legal settings.",
     "url": "https://drive.google.com/file/d/1mZufRauXg89ij-v6uobB3cBc8sh83fsl/view?usp=drive_link",
@@ -246,6 +259,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "i485-questionnaire-glossary",
+    "resourceKind": "Glossary",
     "title": "I -485 Questionnaire Glossary",
     "description": "A bilingual glossary of immigration and legal terminology related to Form I-485 (Application to Register Permanent Residence or Adjust Status). Covers removal and deportation proceedings, criminal history, immigration eligibility, voluntary departure, and other legal concepts. Includes contextual explanations and alternative translations to assist interpreters and translators working in U.S. immigration settings.",
     "url": "https://drive.google.com/file/d/15y68EvDwaJn0sTCq-pzg_rWbofDLDdwg/view?usp=sharing",
@@ -265,6 +279,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "vdict",
+    "resourceKind": "Dictionary",
     "title": "VDict – Vietnamese–English–French Online Dictionary",
     "url": "https://vdict.com/",
     "description": "A free multilingual dictionary offering Vietnamese–English, English–Vietnamese, Vietnamese–French, and French–Vietnamese translations. Includes definitions, pronunciation assistance, Vietnamese proverbs and idioms, and basic text translation tools. A useful reference for interpreters and translators working with Vietnamese, English, and French.",
@@ -283,6 +298,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "migaku-vietnamese-slang",
+    "resourceKind": "Article",
     "title": "Vietnamese Slang Words: A Guide to Sound Like a Local – Migaku",
     "url": "https://migaku.com/blog/language-fun/vietnamese-slang",
     "description": "An educational guide to contemporary Vietnamese slang, colloquial expressions, and informal communication. Covers everyday phrases, internet slang, regional variations, cultural nuances, and common insults, with explanations in English. A useful supplementary resource for interpreters and translators seeking to better understand informal Vietnamese speech and cultural context.",
@@ -301,6 +317,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "vietnamese-consecutive-practice",
+    "resourceKind": "Video",
     "title": "Vietnamese–English Consecutive Interpretation Practice – YouTube",
     "url": "https://www.youtube.com/watch?v=r1v5Q5eeXPg",
     "description": "A bilingual interpretation practice video designed to help Vietnamese–English interpreters develop their consecutive interpreting skills. A useful training resource for practicing listening comprehension, memory retention, note-taking, and accurate interpretation between Vietnamese and English.",
@@ -319,6 +336,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "wisconsin-arabic-legal-glossary",
+    "resourceKind": "Glossary",
     "title": "Glossary of Legal Terminology: English–Arabic – Wisconsin Court System",
     "url": "https://www.wicourts.gov/services/interpreter/docs/arabicglossary.pdf",
     "description": "A bilingual legal glossary containing 472 English legal terms with Arabic translations and explanations. Covers courtroom procedures, criminal and civil law, legal rights, judicial terminology, and law enforcement. A useful reference for Arabic–English court interpreters, legal translators, and bilingual professionals working in judicial settings.",
@@ -337,6 +355,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "cadenza-arabic-english-resources",
+    "resourceKind": "Reference Guide",
     "title": "Online Resources for Arabic–English Translators – Cadenza Academic Translations",
     "url": "https://www.cadenza-academictranslations.com/blog/2022/02/11/online-resources-for-arabicenglish-translators/",
     "description": "A curated collection of online dictionaries, terminology databases, and linguistic resources for Arabic–English translation. Includes references for specialized terminology, regional Arabic dialects, colloquial expressions, literature, and technical vocabulary. A useful resource for interpreters and translators seeking reliable terminology references and tools for language research.",
@@ -355,6 +374,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "arabic-consecutive-practice",
+    "resourceKind": "Video",
     "title": "Arabic–English Consecutive Interpretation Practice",
     "url": "https://www.youtube.com/watch?v=iO-nITg0ydE",
     "description": "A bilingual interpretation practice video designed to help Arabic–English interpreters strengthen their consecutive interpreting skills. A useful training resource for developing listening comprehension, memory retention, note-taking, and accurate interpretation between Arabic and English.",
@@ -373,6 +393,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "arabic-simultaneous-practice",
+    "resourceKind": "Video",
     "title": "Arabic–English Simultaneous Interpreting… No Booth?! Interpreter in Action",
     "url": "https://www.youtube.com/watch?v=eiBw8uiADXY",
     "description": "A video illustrating simultaneous interpreting between Arabic and English without the use of a traditional interpreting booth. A useful supplementary resource for interpreters interested in observing real-world interpreting techniques, listening and speaking coordination, and the practical challenges of simultaneous interpretation in non-booth settings.",
@@ -391,6 +412,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "eliane-arabic-interpreting",
+    "resourceKind": "Video",
     "title": "Eliane Sfeir-Markus on Arabic Interpreting – Episode 63",
     "url": "https://www.youtube.com/watch?v=Y5a2S2Je-X8",
     "description": "An interview featuring professional interpreter Eliane Sfeir-Markus discussing Arabic interpreting and perspectives from the interpreting profession. A supplementary resource for interpreters interested in professional experiences, language challenges, and the practice of Arabic–English interpretation.",
@@ -409,6 +431,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "wu-simultaneous-tips",
+    "resourceKind": "Article",
     "title": "Tips and Tricks: Simultaneous Interpreting – Shenyun Wu",
     "url": "https://shenyunwu.wordpress.com/2014/07/18/tips-and-tricks-simultaneous-interpreting/",
     "description": "An educational article offering practical strategies for developing simultaneous interpreting skills. Covers anticipation, décalage, self-monitoring, shadowing exercises, and techniques for improving concentration and memory. A useful training resource for interpreters seeking to strengthen their accuracy, fluency, and ability to listen and speak simultaneously.",
@@ -427,6 +450,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "confident-interpreter",
+    "resourceKind": "Training Resource",
     "title": "The Confident Interpreter – Professional Interpreter Training Resources",
     "url": "https://www.theconfidentinterpreter.com/",
     "description": "An educational platform offering specialized training materials for aspiring and practicing interpreters. Provides audio exercises, practice scripts, terminology glossaries, and resources for simultaneous interpreting, consecutive interpreting, and sight translation. Particularly useful for court interpreter certification preparation and professional skill development. Includes both free resources and paid training materials.",
@@ -445,6 +469,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "i485-translation-project",
+    "resourceKind": "Reference Guide",
     "title": "Form I-485 (Spanish Reference Guide)",
     "url": "https://drive.google.com/file/d/12JlpqTv23vIca_BjluA4kp9gOCNxQ79S/view?usp=drive_link",
     "description": "A bilingual reference guide containing English–Spanish translations of selected questions from USCIS Form I-485. Covers removal and deportation proceedings, criminal history, immigration violations, human trafficking, money laundering, and national security matters. A useful preparation resource for interpreters and translators working in immigration interviews and legal proceedings.",
@@ -464,6 +489,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "casey-anthony-opening-1",
+    "resourceKind": "Video",
     "title": "Casey Anthony Trial : Day 1, Part 1 : Opening Arguments",
     "url": "https://www.youtube.com/watch?v=oILRGY4obtA",
     "description": "Video supplied for simultaneous interpreting practice: Casey Anthony Trial : Day 1, Part 1 : Opening Arguments.",
@@ -483,6 +509,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "casey-anthony-opening-2",
+    "resourceKind": "Video",
     "title": "Casey Anthony Trial : Day 1, Part 2 : Opening Arguments",
     "url": "https://www.youtube.com/watch?v=vmKBkXDq3jg",
     "description": "Video supplied for simultaneous interpreting practice: Casey Anthony Trial : Day 1, Part 2 : Opening Arguments.",
@@ -502,6 +529,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "casey-anthony-opening-3",
+    "resourceKind": "Video",
     "title": "Casey Anthony Trial : Day 1, Part 3 : Opening Arguments",
     "url": "https://www.youtube.com/watch?v=R9dQut6KDsw",
     "description": "Video supplied for simultaneous interpreting practice: Casey Anthony Trial : Day 1, Part 3 : Opening Arguments.",
@@ -521,6 +549,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "jodi-aris-opening",
+    "resourceKind": "Video",
     "title": "Jodi Aris Trial : Day 1 : Opening Arguments (No Sidebars)",
     "url": "https://www.youtube.com/watch?v=1Fn7WHx4TCw",
     "description": "Video supplied for simultaneous interpreting practice: Jodi Aris Trial : Day 1 : Opening Arguments (No Sidebars).",
@@ -540,6 +569,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "oj-simpson-closing",
+    "resourceKind": "Video",
     "title": "OJ Simpson Trial Defense Closing Argument - Johnnie Cochran Part 1 (1995)",
     "url": "https://www.youtube.com/watch?v=raNyYYs9qBM",
     "description": "Video supplied for simultaneous interpreting practice: OJ Simpson Trial Defense Closing Argument - Johnnie Cochran Part 1 (1995).",
@@ -559,6 +589,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "jodi-arias-day25",
+    "resourceKind": "Video",
     "title": "Jodi Arias Trial Day 25 (Full)",
     "url": "https://www.youtube.com/watch?v=AJ4Svvm7reY",
     "description": "Video supplied for simultaneous interpreting practice: Jodi Arias Trial Day 25 (Full).",
@@ -578,6 +609,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "mock-trial-opening",
+    "resourceKind": "Video",
     "title": "Mock Trial University: Opening Statement | How to Deliver an Opening Statement",
     "url": "https://www.youtube.com/watch?v=05uaOrBdtbE",
     "description": "Video supplied for simultaneous interpreting practice: Mock Trial University: Opening Statement | How to Deliver an Opening Statement.",
@@ -597,6 +629,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "george-floyd-family-impact",
+    "resourceKind": "Video",
     "title": "George Floyd's nephew Brandon Williams addresses impact on family",
     "url": "https://www.youtube.com/watch?v=RiRfhx4QNSc",
     "description": "Video supplied for simultaneous interpreting practice: George Floyd's nephew Brandon Williams addresses impact on family.",
@@ -616,6 +649,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "amanda-hayes-opening",
+    "resourceKind": "Video",
     "title": "Amanda Hayes Trial - Prosecution Opening Statements",
     "url": "https://www.youtube.com/watch?v=-c1mIQ4i-5E",
     "description": "Video supplied for simultaneous interpreting practice: Amanda Hayes Trial - Prosecution Opening Statements.",
@@ -635,6 +669,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "ata-industry-news",
+    "resourceKind": "Article",
     "title": "ATA Industry News – American Translators Association",
     "url": "https://www.atanet.org/news/industry-news/",
     "description": "A professional news resource from the American Translators Association (ATA), providing information on developments, trends, and issues affecting the translation and interpreting professions. A useful resource for language professionals seeking to stay informed about industry developments, technology, and professional opportunities.",
@@ -655,6 +690,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "npr-court-interpreters-demand",
+    "resourceKind": "Article",
     "title": "Demand for Court Interpreters Increases Across the U.S. – NPR (2025)",
     "url": "https://www.npr.org/2025/05/01/nx-s1-5376481/demand-for-court-interpreters-increases-across-the-u-s#:~:text=Court%20interpreters%20are%20in%20high%20demand%2C%20and,and%20sometimes%20makes%20people%20wait%20longer%20in",
     "description": "An NPR news report examining the growing demand for qualified court interpreters across the United States. Highlights interpreter shortages, courtroom delays, compensation challenges, and the importance of professional certification in ensuring meaningful access to justice. Includes interviews with practicing interpreters and representatives of the interpreting profession. Audio recording and transcript available.",
@@ -675,6 +711,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "boostlingo-interpreting-technology-2026",
+    "resourceKind": "Reference Guide",
     "title": "The State of Interpreting Technology 2026 – Boostlingo",
     "url": "https://boostlingo.com/resources/state-of-interpreting-2026/",
     "description": "An industry research report examining current trends and challenges in professional interpreting. Based on a survey of more than 370 stakeholders, it explores interpreter shortages, language access, interpreting quality, remote interpreting technologies, artificial intelligence, and workforce sustainability. A valuable resource for interpreters seeking to understand technological developments and the evolving interpreting profession.",
@@ -696,6 +733,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "npr-green-cards-abroad",
+    "resourceKind": "Article",
     "title": "Trump Administration and Green Cards Abroad – NPR (2026)",
     "url": "https://www.npr.org/2026/05/23/nx-s1-5832399/trump-administration-green-card-abroad",
     "description": "An NPR news report addressing U.S. immigration policy concerning green cards and individuals applying from abroad. A resource for interpreters interested in following immigration-related developments and becoming familiar with terminology used in immigration reporting and legal proceedings.",
@@ -716,6 +754,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "dominika-price-pivot",
+    "resourceKind": "Article",
     "title": "The Price Pivot: Understanding the High-Volume Reality of Agency Work – Dominika",
     "url": "https://www.linkedin.com/pulse/price-pivot-understanding-high-volume-reality-agency-dominika-weston-aemtc/",
     "description": "A professional commentary exploring pricing considerations and the business dynamics of high-volume agency work. A relevant resource for freelance interpreters and translators interested in understanding agency relationships, evaluating compensation structures, and developing sustainable pricing strategies.",
@@ -737,6 +776,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "ata-language-access-bill",
+    "resourceKind": "Article",
     "title": "Senate Bill Would Codify Language Accessibility Standards – ATA (2026)",
     "url": "https://www.atanet.org/industry-news/senate-bill-would-codify-language-accessibility-standards-targeted-by-trump/",
     "description": "A news report examining proposed federal legislation to protect language access services for individuals with limited English proficiency. Discusses the Language Access for All Act of 2026, including requirements for interpreting and translation services, federal language access standards, and safeguards concerning the use of artificial intelligence. A valuable resource for interpreters interested in language access legislation, professional advocacy, and the evolving role of qualified language professionals.",
@@ -757,6 +797,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "ap-visa-revocations",
+    "resourceKind": "Article",
     "title": "U.S. Plans Mass Visa Revocations Affecting Asylum Applicants – Associated Press (2026)",
     "url": "https://apnews.com/article/trump-rubio-visas-revoke-e9c14fdfd0ada439d2b9d8694e678a46",
     "description": "An Associated Press news report examining the Trump administration's proposed revocation of up to 200,000 business and tourist visas held by individuals who have applied for asylum in the United States. Discusses immigration policy changes, visa classifications, asylum applications, and potential legal challenges. A useful resource for interpreters following developments in U.S. immigration law and terminology.",
@@ -777,6 +818,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "inside-interpreters-mind",
+    "resourceKind": "Training Resource",
     "title": "Inside the Interpreter’s Mind: What Nobody Tells You About Language Interpreting",
     "url": "https://www.amazon.com/dp/B0H6JJ8NXK?lv=shuf&bestFormat=true&social_share=cm_sw_r_ffobk_cp_ud_dp_SS8E0W0GBQMQD2NAWQ86&channelId=704&ref_=cm_sw_r_ffobk_cp_ud_dp_SS8E0W0GBQMQD2NAWQ86&plpRedirect=mhFallback",
     "description": "A professional development book exploring the cognitive processes and practical challenges involved in legal and conference interpreting. Examines working memory, anticipation, decision-making, stress management, and the mental demands of interpreting in real time. Also discusses the impact of artificial intelligence on the profession. A valuable resource for aspiring and experienced interpreters interested in understanding the cognitive foundations of their work.",
@@ -798,6 +840,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "athena-cheese-whine",
+    "resourceKind": "Article",
     "title": "Would You Like Some Cheese With Your Whine? – Athena Sky Interpreting",
     "url": "https://athenaskyinterpreting.com/2015/05/08/would-you-like-some-cheese-with-your-whine/#more-70",
     "description": "An educational article offering practical strategies for improving interpreting skills and preparing for certification examinations. Emphasizes self-recording, error analysis, targeted practice, and continuous improvement in accuracy, terminology, fluency, and delivery. A valuable resource for aspiring and experienced interpreters seeking to strengthen their professional performance.",
@@ -818,6 +861,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "tony-rosado-commentary",
+    "resourceKind": "Article",
     "title": "Tony Rosado – Interpreting Industry Articles and Professional Commentary",
     "url": "https://rpstranslations.wordpress.com/tag/tony-rosado/?utm_source=chatgpt.com",
     "description": "A collection of blog posts associated with professional interpreter Tony Rosado. A resource for interpreters interested in exploring discussions about professional ethics, working conditions, industry standards, compensation, and the challenges facing the interpreting profession.",
@@ -838,6 +882,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "courtroom-interpreter-professional-guidelines",
+    "resourceKind": "Reference Guide",
     "title": "Tips for Working with Interpreters in the Courtroom – Professional Guidelines",
     "url": "https://drive.google.com/file/d/1Gfb0Brx-jQqKhmY22mIIccZUgBDh7YQG/view?usp=drive_link",
     "description": "A practical reference guide outlining best practices for judges, attorneys, and courtroom personnel working with professional interpreters. Covers advance preparation, effective courtroom communication, appropriate pacing, document translation, interpreter positioning, fatigue management, and team interpreting. References Louisiana Supreme Court guidelines and NAJIT recommendations to support accurate interpretation and meaningful language access in judicial proceedings.",
@@ -857,6 +902,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "language-access-board-hr8604",
+    "resourceKind": "Official Document",
     "title": "Language Access Board Act of 2026 – H.R. 8604",
     "url": "https://drive.google.com/file/d/1Ts25L6F5oj5tNr-yTSrR8nTX89jPCNPT/view?usp=drive_link",
     "description": "A proposed federal bill introduced in the U.S. House of Representatives to establish a Language Access Board and strengthen language accessibility standards across federal agencies. Addresses access to government services for individuals with limited English proficiency, interpreter and translator qualifications, translation quality, artificial intelligence, and enforcement of language access requirements. A valuable legislative reference for interpreters, translators, and language access advocates.",
@@ -876,6 +922,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "oral-exam-anxiety-training",
+    "resourceKind": "Video",
     "title": "Free Interpreter Oral Exam Training to Manage Exam Anxiety",
     "url": "https://www.youtube.com/watch?v=EkWjr6lJXQk",
     "description": "Interpreter oral-exam training focused on managing exam anxiety, as identified by the supplied title. No further description was provided.",
@@ -894,6 +941,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "usagov-espanol",
+    "resourceKind": "Reference Guide",
     "title": "USAGov en Español – Official U.S. Government Information",
     "url": "https://www.usa.gov/es/",
     "description": "The official Spanish-language portal of the United States Government, providing reliable information on immigration, citizenship, legal matters, public benefits, employment, taxes, housing, and federal services. A valuable reference for interpreters seeking to develop familiarity with Spanish-language government terminology and administrative procedures.",
@@ -912,6 +960,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "louisiana-court-interpreter-tips",
+    "resourceKind": "Official Document",
     "title": "Tips for Working with Court Interpreters in the Louisiana Courts – Louisiana Supreme Court",
     "url": "https://drive.google.com/file/d/10baMvwPGoxmUXl-nTZngS08b7jBRDj2f/view?usp=drive_link",
     "description": "An official Louisiana Supreme Court resource outlining best practices for working with professional court interpreters. Provides guidance on courtroom communication, speaking directly to individuals requiring interpretation, allowing sufficient time for accurate interpretation, and respecting the interpreter's impartial role. A practical reference for judges, attorneys, court personnel, and interpreters seeking to promote effective communication and meaningful access to justice.",
@@ -931,6 +980,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "lasc-interpreter-professional-code",
+    "resourceKind": "Official Document",
     "title": "Louisiana Supreme Court Rules – Part G, Section 14: Code of Professional Responsibility for Language Interpreters",
     "url": "https://www.lasc.org/Supreme_Court_Rules?p=PartGSection14#:~:text=When%20interpreters%20have%20any%20reservation,of%20your%20skill%20and%20judgment?%3C",
     "description": "Official Louisiana Supreme Court rules establishing ethical and professional standards for court interpreters. Addresses accuracy, impartiality, confidentiality, professional competence, conflicts of interest, and appropriate courtroom conduct. An essential reference for interpreters working within Louisiana's judicial system.",
@@ -949,6 +999,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "ata-ethics-code",
+    "resourceKind": "Official Document",
     "title": "ATA Code of Ethics and Professional Responsibility – American Translators Association",
     "url": "https://www.atanet.org/about-us/code-of-ethics/#:~:text=Code%20of%20Ethics-,Code%20of%20Ethics%20and%20Professional%20Responsibility,readership%20or%20audience%2C%20and%20medium",
     "description": "The official Code of Ethics and Professional Responsibility of the American Translators Association (ATA), outlining seven fundamental principles governing ethical conduct in translation and interpreting. Addresses professional integrity, competence, confidentiality, conflicts of interest, contractual commitments, accurate and impartial communication, and continuing professional development. An essential reference for maintaining professional standards and accountability.",
@@ -967,6 +1018,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "najit-confidential-privileged",
+    "resourceKind": "Article",
     "title": "Confidential vs. Privileged: Is There a Difference? – Janis Palma, PhD (NAJIT, 2026)",
     "url": "https://www.najit.org/confidential-vs-privileged",
     "description": "An educational article exploring the legal and ethical distinctions between confidentiality and privileged communications in court interpreting. Examines NAJIT's Code of Ethics, attorney–client privilege, judicial disclosure orders, and relevant case law. A valuable reference for understanding interpreters' responsibilities when handling sensitive information.",
@@ -985,6 +1037,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "la-attorney-reference-card",
+    "resourceKind": "Reference Guide",
     "title": "USE OF COURT INTERPRETERS: AN ATTORNEY REFERENCE CARD",
     "description": "A two-page attorney reference card covering Louisiana code provisions, interpreter ethics, practical courtroom communication tips, and simultaneous, consecutive, and sight interpretation.",
     "url": "documents/official/LA%20Attorney%20Card.pdf",
@@ -1004,6 +1057,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "louisiana-language-access-bench-card",
+    "resourceKind": "Official Document",
     "title": "LOUISIANA’S LANGUAGE ACCESS JUDICIAL BENCH CARD",
     "description": "A two-page Louisiana judicial bench card on identifying language-access needs, obtaining court interpreters, explaining their role, and working with people with limited English proficiency.",
     "url": "documents/official/Language_Access_Bench_Card.pdf",
@@ -1023,6 +1077,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "lasc-lpor-spanish-forms",
+    "resourceKind": "Official Document",
     "title": "Louisiana Supreme Court — LPOR Forms (Spanish)",
     "description": "Owner-supplied link to the Louisiana Supreme Court LPOR forms page with the Spanish-language index selected. External page contents have not been independently verified.",
     "url": "https://www.lasc.org/LPOR-Forms?p=index_1-25_espanol",
@@ -1041,6 +1096,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "najit-court-administrators",
+    "resourceKind": "Official Document",
     "title": "Information for Court Administrators",
     "description": "NAJIT position paper answering practical questions about selecting qualified court interpreters, interpreting ethics, staffing, preparation, and court administration.",
     "source": "Judith Kenigson Kristy; National Association of Judiciary Interpreters & Translators (NAJIT)",
@@ -1061,6 +1117,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "najit-team-interpreting",
+    "resourceKind": "Official Document",
     "title": "TEAM INTERPRETING IN COURT-RELATED PROCEEDINGS",
     "description": "Position paper discussing team interpreting in legal proceedings, fatigue, collaboration, and recommendations for protecting interpretation accuracy.",
     "source": "Gladys Segal and Teresa C. Salazar",
@@ -1081,6 +1138,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "najit-onsite-sound-file",
+    "resourceKind": "Official Document",
     "title": "Onsite Simultaneous Interpretation of a Sound File is Not Recommended",
     "description": "NAJIT position paper explaining the limitations of on-the-spot courtroom interpretation of recordings and the role of forensic transcription and translation.",
     "source": "Teresa C. Salazar and Gladys Segal; National Association of Judiciary Interpreters & Translators (NAJIT)",
@@ -1101,6 +1159,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "najit-witness-stand-consecutive",
+    "resourceKind": "Official Document",
     "title": "Consecutive Interpreting at the Witness Stand: why it should always be the only mode used",
     "description": "Position paper discussing consecutive interpreting for witness testimony, interpreting-mode choices, and their implications for comprehension and the court record.",
     "source": "Janis Palma",
@@ -1121,6 +1180,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "ccj-adequate-interpretation",
+    "resourceKind": "Official Document",
     "title": "https://ccj.ncsc.org/resources-courts/support-efforts-ensure-adequate-court-interpretation-services?utm_source=chatgpt.com",
     "url": "https://ccj.ncsc.org/resources-courts/support-efforts-ensure-adequate-court-interpretation-services?utm_source=chatgpt.com",
     "description": "Original-source link on the Conference of Chief Justices / National Center for State Courts website concerning adequate court interpretation services. External contents have not been independently verified.",
@@ -1139,6 +1199,7 @@ window.HUB_CATALOG = {
   },
   {
     "id": "ata-remote-interpreting-position",
+    "resourceKind": "Official Document",
     "title": "https://www.atanet.org/advocacy-outreach/ata-position-paper-on-remote-interpreting/",
     "url": "https://www.atanet.org/advocacy-outreach/ata-position-paper-on-remote-interpreting/",
     "description": "Original-source link to the American Translators Association position paper on remote interpreting. External contents have not been independently verified.",
@@ -1166,3 +1227,4 @@ window.HUB_CATALOG = {
   }
 }
 };
+
