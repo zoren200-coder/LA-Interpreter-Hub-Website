@@ -44,3 +44,5 @@
 .training-video-group li{padding:8px 0}
 .training-video-group a{display:inline-block;padding:4px 0;font-weight:600;text-underline-offset:3px}
 .training-video-group .video-content-warning{font-weight:bold}
+
+.resource-results .resource-kind{display:table;width:fit-content;max-width:100%;margin:0 0 12px;padding:4px 10px;border:1px solid #cbded7;border-radius:4px;background:#edf4f1;color:#185548;font-size:12px;font-weight:700;line-height:1.5}
