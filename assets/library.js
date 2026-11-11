@@ -20,6 +20,11 @@
   fillSubcategories();
   controls.forEach((control, index) => { control.value = params.get(fields[index]) || ''; });
   const text = (tag, content) => { const el = document.createElement(tag); el.textContent = content; return el; };
+  const kindLabel = value => {
+    const label = text('p', value);
+    label.className = 'resource-kind';
+    return label;
+  };
   const safeURL = value => {
     try { const url = new URL(value, location.href); return ['http:', 'https:'].includes(url.protocol) ? url.href : null; }
     catch { return null; }
@@ -54,7 +59,7 @@
     if (subcategory.value === 'training') noteBox.hidden = true;
     const cards = ordered.map(r => {
       const article = document.createElement('article');
-      article.append(text('h2', r.title));
+      article.append(kindLabel(r.resourceKind || 'Reference Guide'), text('h2', r.title));
       if (r.description) article.append(text('p', r.description));
       const a = text('a', r.linkLabel || (r.type === 'pdf' ? 'Open PDF at source' : r.type === 'document' ? 'Open document at source' : 'Visit resource')); a.href = safeURL(r.url);
       if (r.download) a.download = r.download;
@@ -67,7 +72,7 @@
     if (trainingVideos.length) {
       videoGroup = document.createElement('article');
       videoGroup.className = 'training-video-group';
-      videoGroup.append(text('h2', 'Videos: simultaneous trial practice'));
+      videoGroup.append(kindLabel('Video'), text('h2', 'Videos: simultaneous trial practice'));
       videoGroup.append(text('p', 'Practice simultaneous interpreting with these trial recordings and courtroom-related videos.'));
       if (note) {
         videoGroup.append(text('p', note.text));
