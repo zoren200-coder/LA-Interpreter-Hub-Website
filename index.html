@@ -83,10 +83,7 @@
       </div>
 
       <div class="library-tools">
-        <label class="search">
-          <span aria-hidden="true">⌕</span>
-          <input id="search" type="search" aria-label="Search study library" placeholder="Search topics, terminology, or resources…">
-        </label>
+        <a class="button" href="resources.html">Search the resource library</a>
         <select id="category" aria-label="Filter library by category">
           <option value="all">All categories</option>
           <option value="terminology">Terminology</option>
@@ -150,10 +147,8 @@
           </details>
         </article>
 
-        <p id="empty" class="empty" hidden>No matching topics. Try a different search or category.</p>
       </div>
 
-      <p class="notice" id="resource-status" role="status">3 categories · Starter catalog — study topics are illustrative; downloadable materials are not yet available.</p>
     </section>
 
     <section id="community" aria-labelledby="community-title">
@@ -254,29 +249,17 @@
 </footer>
 
 <script>
-const search = document.querySelector('#search');
 const category = document.querySelector('#category');
 const cards = [...document.querySelectorAll('.card')];
 
 function filter() {
-  const term = search.value.trim().toLowerCase();
-  let count = 0;
 
   cards.forEach(card => {
-    const matches =
-      (category.value === 'all' || card.dataset.category === category.value) &&
-      card.textContent.toLowerCase().includes(term);
-
+    const matches = category.value === 'all' || card.dataset.category === category.value;
     card.hidden = !matches;
-    if (matches) count++;
   });
-
-  document.querySelector('#empty').hidden = count > 0;
-  document.querySelector('#resource-status').textContent =
-    `${count} ${count === 1 ? 'category' : 'categories'} · Starter catalog — study topics are illustrative; downloadable materials are not yet available.`;
 }
 
-search.addEventListener('input', filter);
 category.addEventListener('change', filter);
 document.querySelector('#year').textContent = new Date().getFullYear();
 </script>
