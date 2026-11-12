@@ -58,7 +58,6 @@
       $('directory-status').textContent=found.length+' participating interpreters';
     };
     search.addEventListener('input',render);filters.forEach(([id])=>$(id).addEventListener('change',render));render();
-    $('directory-request').addEventListener('submit',event=>event.preventDefault());
   }
   $('year').textContent=new Date().getFullYear();
 })();
