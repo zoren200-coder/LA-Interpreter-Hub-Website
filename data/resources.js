@@ -11,8 +11,7 @@ window.HUB_CATALOG = {
     ]},
     {id: 'ethics', title: 'Ethics and Professional Practice', subcategories: [
       {id: 'codes', title: 'Codes of Ethics'},
-      {id: 'scenarios', title: 'Ethical Scenarios & Case Studies'},
-      {id: 'practices', title: 'Best Practices'}
+      {id: 'scenarios', title: 'Ethical Scenarios & Case Studies'}
     ]},
     {id: 'archive', title: 'Archive and Important Documents', subcategories: [
       {id: 'official', title: 'Official Documents'},
@@ -1244,8 +1243,8 @@ window.HUB_CATALOG = {
     "source": "Louisiana Legal Services and Pro Bono Desk Manual",
     "subject": "Working with interpreters",
     "type": "external",
-    "category": "ethics",
-    "subcategory": "practices",
+    "category": "knowledge",
+    "subcategory": "general",
     "linkLabel": "View Resource",
     "language": "English",
     "status": "published",

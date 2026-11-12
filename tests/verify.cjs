@@ -21,7 +21,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     await open('index.html');
     const catalog = await page.evaluate(() => window.HUB_CATALOG);
     assert.equal(catalog.categories[0].subcategories.length, 6);
-    assert.equal(catalog.categories[1].subcategories.length, 3);
+    assert.equal(catalog.categories[1].subcategories.length, 2);
     assert.equal(catalog.categories[2].subcategories.length, 2);
     assert.equal(catalog.resources.length, 63, 'Sixty-three unique resource records');
     const kinds = ['Article', 'Dictionary', 'Glossary', 'Reference Guide', 'Training Resource', 'Video', 'Official Document'];
@@ -183,13 +183,16 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           assert.equal(await page.locator('#resource-results article').count(), 2);
           assert.deepEqual(await page.locator('.resource-date-heading').allTextContents(), ['Undated articles and publications']);
         } else if (sub.id === 'general') {
-          assert.equal(await page.locator('#resource-results article').count(), 5);
+          assert.equal(await page.locator('#resource-results article').count(), 6);
+          const guide = page.locator('#resource-results article').filter({hasText: 'Best Practices for Working with Interpreters'});
+          assert.equal(await guide.locator('.resource-kind').textContent(), 'Reference Guide');
           const expected = [
             ['Tips for Working with Interpreters in the Courtroom – Professional Guidelines', 'https://drive.google.com/file/d/1Gfb0Brx-jQqKhmY22mIIccZUgBDh7YQG/view?usp=drive_link'],
             ['Language Access Board Act of 2026 – H.R. 8604', 'https://drive.google.com/file/d/1Ts25L6F5oj5tNr-yTSrR8nTX89jPCNPT/view?usp=drive_link'],
             ['Free Interpreter Oral Exam Training to Manage Exam Anxiety', 'https://www.youtube.com/watch?v=EkWjr6lJXQk'],
             ['USAGov en Español – Official U.S. Government Information', 'https://www.usa.gov/es/'],
-            ['Tips for Working with Court Interpreters in the Louisiana Courts – Louisiana Supreme Court', 'https://drive.google.com/file/d/10baMvwPGoxmUXl-nTZngS08b7jBRDj2f/view?usp=drive_link']
+            ['Tips for Working with Court Interpreters in the Louisiana Courts – Louisiana Supreme Court', 'https://drive.google.com/file/d/10baMvwPGoxmUXl-nTZngS08b7jBRDj2f/view?usp=drive_link'],
+            ['Language Access: Best Practices for Working with Interpreters', 'https://probonodeskmanual.loyno.edu/language-access/73-best-practices']
           ];
           assert.equal(catalog.resources.filter(r=>r.subcategory==='general').length, expected.length);
           for (const [title, url] of expected) {
@@ -279,10 +282,6 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           assert.equal(await page.locator('#resource-results article').count(),4);
           await page.locator('#resource-subject').selectOption('Team interpreting');
           assert.equal(await page.locator('#resource-results article').count(),1);
-        } else if (sub.id === 'practices') {
-          const card = page.locator('#resource-results article').filter({hasText: 'Best Practices for Working with Interpreters'});
-          assert.equal(await card.locator('.resource-kind').textContent(), 'Reference Guide');
-          assert.equal(await card.locator('a').getAttribute('href'), 'https://probonodeskmanual.loyno.edu/language-access/73-best-practices');
         } else assert(await page.locator('#library-empty').isVisible());
       }
     }
