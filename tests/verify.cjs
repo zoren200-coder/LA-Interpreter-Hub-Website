@@ -23,7 +23,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
     assert.equal(catalog.categories[0].subcategories.length, 6);
     assert.equal(catalog.categories[1].subcategories.length, 3);
     assert.equal(catalog.categories[2].subcategories.length, 2);
-    assert.equal(catalog.resources.length, 61, 'Sixty-one unique resource records');
+    assert.equal(catalog.resources.length, 63, 'Sixty-three unique resource records');
     const kinds = ['Article', 'Dictionary', 'Glossary', 'Reference Guide', 'Training Resource', 'Video', 'Official Document'];
     assert(catalog.resources.every(r => kinds.includes(r.resourceKind)), 'Every resource has one of the seven requested classifications');
     assert.deepEqual([...new Set(catalog.resources.map(r => r.resourceKind))].sort(), [...kinds].sort());
@@ -32,8 +32,8 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
       assert.equal(catalog.resources.find(r => r.id === id).resourceKind, kind);
     }
     assert.equal(catalog.reviewQueue.length, 0, 'Both Drive files approved for source linking');
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 61);
-    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 61);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.id)).size, 63);
+    assert.equal(new Set([...catalog.resources, ...catalog.reviewQueue].map(r=>r.url)).size, 63);
     assert.deepEqual(await page.locator('#navigation > *').evaluateAll(nodes => nodes.map(n => n.tagName === 'DETAILS' ? n.querySelector('summary').textContent : n.textContent)), ['Home', 'Resources and Knowledge', 'Ethics and Professional Practice', 'Archive and Important Documents', 'About the Hub', 'Search']);
     assert.equal(await page.locator('#navigation details details').count(), 0);
     const links = await page.locator('#navigation a').evaluateAll(nodes => nodes.map(a => a.href));
@@ -127,7 +127,7 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           assert.equal(records[confidentIndex + 1].title, 'Form I-485 (Spanish Reference Guide)');
           const headings = await page.locator('#resource-results > article > h2').allTextContents();
           assert.equal(headings[headings.indexOf('The Confident Interpreter – Professional Interpreter Training Resources') + 1], 'Form I-485 (Spanish Reference Guide)');
-          assert.equal(await page.locator('#resource-results > article').count(), 4);
+          assert.equal(await page.locator('#resource-results > article').count(), 5);
           assert.equal(await page.locator('.training-video-group').count(), 1);
           assert.equal(await page.locator('.training-video-group h2').textContent(), 'Videos: simultaneous trial practice');
           assert((await page.locator('.training-video-group').textContent()).includes('rest every 30 minutes!!'));
@@ -279,11 +279,15 @@ const base = process.env.HUB_BASE_URL || 'http://127.0.0.1:8000';
           assert.equal(await page.locator('#resource-results article').count(),4);
           await page.locator('#resource-subject').selectOption('Team interpreting');
           assert.equal(await page.locator('#resource-results article').count(),1);
+        } else if (sub.id === 'practices') {
+          const card = page.locator('#resource-results article').filter({hasText: 'Best Practices for Working with Interpreters'});
+          assert.equal(await card.locator('.resource-kind').textContent(), 'Reference Guide');
+          assert.equal(await card.locator('a').getAttribute('href'), 'https://probonodeskmanual.loyno.edu/language-access/73-best-practices');
         } else assert(await page.locator('#library-empty').isVisible());
       }
     }
     await open('resources.html');
-    assert.equal(await page.locator('#resource-results article').count(), 61);
+    assert.equal(await page.locator('#resource-results article').count(), 63);
     assert.deepEqual(await page.locator('#resource-results > article > .resource-kind').allTextContents(), catalog.resources.map(r => r.resourceKind));
     await page.locator('#resource-search').fill('Miranda');
     assert.equal(await page.locator('#resource-results article').count(), 1, 'Cross-list is not a duplicate global result');
