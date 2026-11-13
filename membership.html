@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Louisiana Interpreters Hub: a shared space to study, connect, and grow in the interpreting profession.">
+<title>Hub Membership | Louisiana Interpreters Hub</title>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/library.css?v=feature-boxes-1">
+<script defer src="data/resources.js?v=general-resources-2"></script>
+<script defer src="assets/navigation.js?v=feature-boxes-1"></script>
+<link rel="stylesheet" href="assets/community.css?v=directory-status-2">
+<script defer src="data/supabase-config.js?v=key-2"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="assets/membership.js"></script>
+<link rel="stylesheet" href="assets/membership.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <a href="index.html" class="brand" aria-label="Louisiana Interpreters Hub home">
+    <img
+      class="brand-logo"
+      src="Louisiana%20Interpreters%20Hub%20Banner.png"
+      alt="Louisiana Interpreters Hub"
+      width="2170"
+      height="725"
+      fetchpriority="high"
+    >
+  </a>
+  <div class="header-nav">
+    <div class="wrap header-inner">
+      <button class="menu" aria-expanded="false" aria-controls="navigation">Menu ☰</button>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href="index.html#library">Study library</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#about" class="nav-cta">About the hub ↗</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap library-page membership-page">
+<h1>Hub Membership</h1>
+<p>Create a free account to become a member of the Interpreter Hub of Louisiana. Verify your email to complete registration.</p>
+<p>Membership does not publish your information in the interpreter directory or verify professional credentials. Directory applications will be added separately.</p>
+<p id="member-status" role="status" aria-live="polite">Loading membership service…</p>
+<section id="member-account" class="directory-request" hidden>
+<h2>Welcome to the Hub</h2><p id="member-identity"></p>
+<p>Your membership is active. Directory applications are not open yet.</p>
+<button id="member-signout" class="button" type="button">Sign out</button>
+</section>
+<div id="member-forms" class="membership-grid" hidden>
+<section class="directory-request"><h2>Become a member</h2>
+<form id="member-signup">
+<label for="signup-name">Professional name</label><input id="signup-name" autocomplete="name" maxlength="150" required>
+<label for="signup-email">Email</label><input id="signup-email" type="email" autocomplete="email" required>
+<label for="signup-password">Password (at least 12 characters)</label><input id="signup-password" type="password" autocomplete="new-password" minlength="12" required>
+<label class="consent-label"><input id="signup-consent" type="checkbox" required><span>I want to register as a Hub member. My account information will be stored using Supabase for membership access and will not be listed publicly.</span></label>
+<button class="button" type="submit">Register as a member</button>
+</form></section>
+<section class="directory-request"><h2>Member sign-in</h2>
+<form id="member-login">
+<label for="login-email">Email</label><input id="login-email" type="email" autocomplete="email" required>
+<label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required>
+<button class="button" type="submit">Sign in</button>
+</form>
+<h3>Forgot your password?</h3><form id="member-reset">
+<label for="reset-email">Account email</label><input id="reset-email" type="email" autocomplete="email" required>
+<button class="button" type="submit">Send password reset email</button>
+</form></section>
+</div>
+<section id="member-recovery" class="directory-request" hidden><h2>Choose a new password</h2>
+<form id="member-password"><label for="new-password">New password (at least 12 characters)</label><input id="new-password" type="password" autocomplete="new-password" minlength="12" required><button class="button" type="submit">Save new password</button></form>
+</section>
+<noscript>Enable JavaScript to register or sign in.</noscript>
+</main>
+<footer>
+  <div class="wrap footer-inner">
+    <span>© <span id="year">2026</span> Louisiana Interpreters Hub</span>
+    <span>Supporting the people who make understanding possible.</span>
+  </div>
+</footer>
+
+</body>
+</html>
