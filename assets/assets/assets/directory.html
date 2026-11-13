@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Louisiana Interpreters Hub: a shared space to study, connect, and grow in the interpreting profession.">
+<title>Find an Interpreter | Louisiana Interpreters Hub</title>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/library.css?v=feature-boxes-1">
+<script defer src="data/resources.js?v=general-resources-2"></script>
+<script defer src="assets/navigation.js?v=feature-boxes-1"></script>
+<link rel="stylesheet" href="assets/community.css?v=directory-status-2">
+<script defer src="data/community.js"></script>
+<script defer src="data/supabase-config.js?v=key-2"></script>
+<script defer src="assets/community.js?v=directory-status-2"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="assets/supabase-directory.js?v=directory-status-2"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <a href="index.html" class="brand" aria-label="Louisiana Interpreters Hub home">
+    <img
+      class="brand-logo"
+      src="Louisiana%20Interpreters%20Hub%20Banner.png"
+      alt="Louisiana Interpreters Hub"
+      width="2170"
+      height="725"
+      fetchpriority="high"
+    >
+  </a>
+  <div class="header-nav">
+    <div class="wrap header-inner">
+      <button class="menu" aria-expanded="false" aria-controls="navigation">Menu ☰</button>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href="index.html#library">Study library</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#about" class="nav-cta">About the hub ↗</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap library-page community-page">
+<div class="breadcrumb"><a href="index.html">Home</a> / Interpreter Directory</div>
+<h1>Find an Interpreter</h1>
+<p>Connect with professional interpreters who are part of the Interpreter Hub of Louisiana.</p>
+<div class="directory-connection">
+<p id="directory-status" role="status" aria-live="polite">Loading interpreters…</p>
+<button class="button" id="directory-retry" type="button" hidden>Retry loading directory</button>
+</div>
+<div class="resource-filters directory-filters" role="search" aria-label="Find an interpreter">
+<label>Interpreter name or keywords<input id="directory-search" type="search" placeholder="Name, language, or specialization"></label>
+<label>Language pair<select id="directory-language"><option value="">All language pairs</option></select></label>
+<label>Professional specialization<select id="directory-specialization"><option value="">All specializations</option></select></label>
+<label>Geographic location<select id="directory-location"><option value="">All service areas</option></select></label>
+<label>Certification or credential type<select id="directory-credential"><option value="">All credentials</option></select></label>
+</div>
+<div id="directory-results" class="resource-results"></div>
+<p id="directory-empty" class="library-empty" hidden>Our interpreter directory is growing. Check back soon to connect with participating professionals.</p>
+<p>Profiles and credentials are member supplied. Directory inclusion does not imply independent verification or endorsement.</p>
+<p class="notice">Profile submissions are currently closed.</p>
+<noscript><p>Enable JavaScript to use directory search and filters.</p></noscript>
+</main>
+<div class="wrap"><p><a href="membership.html">Become a Hub member / Member sign-in</a></p></div>
+<footer>
+  <div class="wrap footer-inner">
+    <span>© <span id="year">2026</span> Louisiana Interpreters Hub</span>
+    <span>Supporting the people who make understanding possible.</span>
+  </div>
+</footer>
+
+</body>
+</html>
