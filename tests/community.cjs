@@ -7,7 +7,7 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
   const page=await browser.newPage();
   // Isolate static catalog/consent fixtures; real SDK/API behavior is covered by supabase-directory.cjs.
   await page.route('**/assets/supabase-directory.js*',route=>route.fulfill({contentType:'text/javascript',body:''}));
-  await page.route('**/data/supabase-config.js',route=>route.fulfill({contentType:'text/javascript',body:''}));
+  await page.route('**/data/supabase-config.js*',route=>route.fulfill({contentType:'text/javascript',body:''}));
   await page.route('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',route=>route.fulfill({contentType:'text/javascript',body:''}));
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const open=async path=>{const r=await page.goto(base+'/'+path);assert.equal(r.status(),200);};
