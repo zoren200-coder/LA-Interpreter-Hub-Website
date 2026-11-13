@@ -39,8 +39,13 @@
   async function fetchRows(client,table='Interpreters',pageSize=500) {
     const rows=[];
     for (let offset=0;;) {
-      const {data,error}=await client.from(table).select('*').range(offset,offset+pageSize-1);
-      if (error) throw error;
+      const {data,error,status}=await client.from(table).select('*').range(offset,offset+pageSize-1);
+      if (error) {
+        const issue=new Error('Directory request failed');
+        issue.httpStatus=status;
+        issue.code=/^[A-Za-z0-9_-]{1,40}$/.test(error.code||'')?error.code:'REQUEST_FAILED';
+        throw issue;
+      }
       if (!Array.isArray(data)) throw new Error('Invalid directory response');
       if (!data.length) break;
       rows.push(...data);
@@ -61,17 +66,24 @@
       let loaded=false;
       try {
         const config=root.HUB_SUPABASE_DIRECTORY;
-        if (!config || !root.supabase?.createClient) throw new Error('Directory client unavailable');
+        if (!config || !root.supabase?.createClient) {const issue=new Error('Directory client unavailable');issue.code='SDK_UNAVAILABLE';throw issue;}
         const endpoint=new URL(config.url);
         if (endpoint.protocol!=='https:' || endpoint.hostname==='supabase.co' || endpoint.pathname!=='/' || endpoint.username || endpoint.password) throw new Error('Invalid project URL');
         const client=root.supabase.createClient(config.url,config.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
         const rows=await fetchRows(client,config.table);
-        root.HubDirectory.setProfiles(rows.map(mapRow));loaded=true;
-      } catch {
-        // Do not expose raw DB errors, query internals or credentials to visitors.
+        root.HubDirectory.setProfiles(rows.map(mapRow));loaded=true;status.removeAttribute('data-error-code');
+        if (!rows.length) empty.textContent='No public interpreter profiles were returned. Please check back for updates.';
+      } catch (issue) {
+        // Only expose a safe category/status, never raw errors or credentials.
         root.HubDirectory.setProfiles([]);
-        status.textContent='Interpreter directory temporarily unavailable.';
-        empty.textContent='We could not load the interpreter registry. Please try again shortly.';empty.hidden=false;retry.hidden=false;
+        const code=issue.code||'CONNECTION_FAILED';status.dataset.errorCode=code;
+        const diagnostic=issue.httpStatus?'HTTP '+issue.httpStatus+' · '+code:code;
+        status.textContent='Interpreter directory temporarily unavailable. Reference: '+diagnostic+'.';
+        if (code==='SDK_UNAVAILABLE') empty.textContent='The directory service could not load. Please reload this page and try again.';
+        else if ([401,403].includes(issue.httpStatus)) empty.textContent='Directory access is unavailable. Please contact the Hub administrator.';
+        else if (issue.httpStatus===404) empty.textContent='The directory data source is unavailable. Please contact the Hub administrator.';
+        else empty.textContent='We could not connect to the interpreter registry. Please try again shortly.';
+        empty.hidden=false;retry.hidden=false;
       } finally {
         document.getElementById('directory-results').setAttribute('aria-busy','false');
         controls.forEach(c=>{c.disabled=!loaded;});

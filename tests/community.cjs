@@ -6,7 +6,8 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
  try {
   const page=await browser.newPage();
   // Isolate static catalog/consent fixtures; real SDK/API behavior is covered by supabase-directory.cjs.
-  await page.route('**/assets/supabase-directory.js',route=>route.fulfill({contentType:'text/javascript',body:''}));
+  await page.route('**/assets/supabase-directory.js*',route=>route.fulfill({contentType:'text/javascript',body:''}));
+  await page.route('**/data/supabase-config.js',route=>route.fulfill({contentType:'text/javascript',body:''}));
   await page.route('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',route=>route.fulfill({contentType:'text/javascript',body:''}));
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const open=async path=>{const r=await page.goto(base+'/'+path);assert.equal(r.status(),200);};
@@ -44,7 +45,8 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
   await page.locator('#event-search').fill('anything');await page.locator('#event-type').selectOption('Webinar');assert(await page.locator('#event-empty').isVisible());
   await open('directory.html');assert.equal(await page.locator('#directory-results article').count(),0);
   assert.equal(await page.locator('#directory-empty').textContent(),'Our interpreter directory is growing. Check back soon to connect with participating professionals.');
-  assert(await page.locator('#directory-notice-title').isVisible());
+  assert.equal(await page.locator('#directory-notice-title').count(),0);
+  assert((await page.locator('.notice').textContent()).includes('submissions are currently closed'));
   assert.equal(await page.locator('form').count(),0);
   assert.deepEqual(await page.evaluate(()=>({events:HUB_COMMUNITY.events,interpreters:HUB_COMMUNITY.interpreters})),{events:[],interpreters:[]});
   console.log('Responsive homepage feature boxes, keyboard/button links, current navigation, empty catalogs and closed-submission notice pass.');

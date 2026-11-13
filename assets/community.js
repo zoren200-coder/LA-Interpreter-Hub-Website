@@ -72,7 +72,12 @@
       profiles=records.filter(p=>p.approved===true && p.publicationAuthorized===true);
       fillFilters();render();
     }};
-    search.addEventListener('input',render);filters.forEach(([id])=>$(id).addEventListener('change',render));render();
+    search.addEventListener('input',render);filters.forEach(([id])=>$(id).addEventListener('change',render));
+    if (window.HUB_SUPABASE_DIRECTORY) {
+      $('directory-status').textContent='Loading interpreters…';$('directory-empty').hidden=true;
+      $('directory-results').setAttribute('aria-busy','true');
+      [search,...filters.map(([id])=>$(id))].forEach(control=>{control.disabled=true;});
+    } else render();
   }
   $('year').textContent=new Date().getFullYear();
 })();
