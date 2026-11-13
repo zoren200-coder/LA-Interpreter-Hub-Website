@@ -10,6 +10,9 @@
 <script defer src="data/resources.js?v=general-resources-2"></script>
 <script defer src="assets/navigation.js?v=feature-boxes-1"></script>
 <link rel="stylesheet" href="assets/home.css?v=featured-conversation-1">
+<link rel="stylesheet" href="assets/discussion-suggestions.css?v=2">
+<script defer src="assets/resource-suggestions.js?v=1"></script>
+<script defer src="assets/discussion-suggestions.js?v=1"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -135,6 +138,7 @@
           <p>One question, shared experiences, and practical ideas from fellow interpreters.</p>
         </div>
       </div>
+      <div class="conversation-with-resources">
       <div class="community-panel community-conversation" aria-labelledby="conversation-title">
         <div>
           <span class="section-label">Featured question</span>
@@ -147,6 +151,15 @@
           </div>
           <p class="conversation-access">Everyone can read. Register to reply.</p>
         </div>
+      </div>
+
+        <aside class="related-resource-finder" aria-labelledby="related-resource-title">
+          <h3 id="related-resource-title">Find a related resource</h3>
+          <p id="related-resource-help">Paste your question in English or Spanish to find relevant Hub resources. Matching stays in your browser; your text is not sent or saved. The discussion board opens on a separate website.</p>
+          <label for="related-resource-question">Your question</label>
+          <textarea id="related-resource-question" rows="5" aria-describedby="related-resource-help" placeholder="For example: I-485 adjustment of status terminology" autocomplete="off" spellcheck="false"></textarea>
+          <div id="related-resource-suggestions" class="discussion-suggestions" aria-live="polite" aria-atomic="true" hidden></div>
+        </aside>
       </div>
 
       <div class="community-panel feedback-callout" aria-labelledby="feedback-title">

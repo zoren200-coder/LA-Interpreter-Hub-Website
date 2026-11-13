@@ -11,7 +11,10 @@
 <script defer src="assets/navigation.js?v=feature-boxes-1"></script>
 <link rel="stylesheet" href="assets/community.css">
 <script defer src="data/community.js"></script>
-<script defer src="assets/community.js"></script>
+<script defer src="assets/community.js?v=supabase-directory-1"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="data/supabase-config.js"></script>
+<script defer src="assets/supabase-directory.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -55,6 +58,7 @@
 <label>Certification or credential type<select id="directory-credential"><option value="">All credentials</option></select></label>
 </div>
 <p id="directory-status" role="status" aria-live="polite"></p>
+<button class="button" id="directory-retry" type="button" hidden>Retry loading directory</button>
 <div id="directory-results" class="resource-results"></div>
 <p id="directory-empty" class="library-empty">Our interpreter directory is growing. Check back soon to connect with participating professionals.</p>
 <p>Profiles and credentials are member supplied. Directory inclusion does not imply independent verification or endorsement.</p>

@@ -4,13 +4,18 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true});
  try {
-  const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const page=await browser.newPage();
+  // Isolate static catalog/consent fixtures; real SDK/API behavior is covered by supabase-directory.cjs.
+  await page.route('**/assets/supabase-directory.js',route=>route.fulfill({contentType:'text/javascript',body:''}));
+  await page.route('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',route=>route.fulfill({contentType:'text/javascript',body:''}));
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const open=async path=>{const r=await page.goto(base+'/'+path);assert.equal(r.status(),200);};
   for(const width of [320,375,768,850,851,1024,1440,1920]){
    await page.setViewportSize({width,height:1000});
    await open('index.html');
    if(width<=850)await page.locator('.menu').click();
-   assert.equal(await page.locator('#navigation a[href="events.html"], #navigation a[href="directory.html"]').count(),0);
+   assert.equal(await page.locator('#navigation a[href="events.html"]').count(),0);
+   assert.equal(await page.locator('#navigation a[href="directory.html"]').count(),1);
    assert.equal(await page.locator('.hero-note').count(),0);
    assert(!(await page.locator('body').textContent()).includes('Many languages.'));
    const left=await page.locator('.hero-inner > div').boundingBox();
@@ -28,7 +33,8 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
     // The button-styled label and the card share one keyboard-accessible anchor.
     assert.equal(await box.locator('a,button').count(),0);
     await box.focus();await Promise.all([page.waitForURL('**/'+path),page.keyboard.press('Enter')]);assert(page.url().endsWith('/'+path));
-    assert.equal(await page.locator('#navigation a[href="events.html"], #navigation a[href="directory.html"]').count(),0);
+    assert.equal(await page.locator('#navigation a[href="events.html"]').count(),0);
+   assert.equal(await page.locator('#navigation a[href="directory.html"]').count(),1);
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
     await open('index.html');await Promise.all([page.waitForURL('**/'+path),page.locator(selector+' .feature-action').click()]);assert(page.url().endsWith('/'+path));
    }
@@ -38,12 +44,10 @@ const base=process.env.HUB_BASE_URL||'http://127.0.0.1:8000';
   await page.locator('#event-search').fill('anything');await page.locator('#event-type').selectOption('Webinar');assert(await page.locator('#event-empty').isVisible());
   await open('directory.html');assert.equal(await page.locator('#directory-results article').count(),0);
   assert.equal(await page.locator('#directory-empty').textContent(),'Our interpreter directory is growing. Check back soon to connect with participating professionals.');
-  assert(await page.locator('#directory-request button').isDisabled());assert(await page.locator('[name="publicationConsent"]').isDisabled());
-  assert(await page.locator('#directory-request input').evaluateAll(inputs=>inputs.every(i=>i.matches(':disabled'))));
-  assert(!await page.locator('#directory-request').getAttribute('action'));
-  assert.equal(await page.locator('#directory-request').evaluate(form=>{const e=new Event('submit',{cancelable:true});return !form.dispatchEvent(e)}),true);
+  assert(await page.locator('#directory-notice-title').isVisible());
+  assert.equal(await page.locator('form').count(),0);
   assert.deepEqual(await page.evaluate(()=>({events:HUB_COMMUNITY.events,interpreters:HUB_COMMUNITY.interpreters})),{events:[],interpreters:[]});
-  console.log('Responsive homepage feature boxes, keyboard/button links, navigation removal, empty catalogs and inactive consent form pass.');
+  console.log('Responsive homepage feature boxes, keyboard/button links, current navigation, empty catalogs and closed-submission notice pass.');
   // Synthetic test records only: intercepted in-memory, never in public page data.
   const event=(id,startAt,type='Webinar')=>({id,title:'TEST ONLY '+id,type,startAt,timeZone:'America/Chicago',location:'Online',organizer:'Test organizer',description:'Test description',url:'https://example.org/'+id});
   const profile=(name,changes={})=>({id:name,name,languages:['Spanish ↔ English'],specializations:['Court'],credentials:['Member supplied credential'],serviceArea:'Test city',availability:'Remote',website:'https://example.org/profile',contactURL:'https://example.org/contact',contactAuthorized:true,approved:true,publicationAuthorized:true,...changes});

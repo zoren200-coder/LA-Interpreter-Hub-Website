@@ -36,18 +36,29 @@
   }
   if ($('directory-search')) {
     // Publishing requires both editorial approval and explicit publication authorization.
-    const profiles = data.interpreters.filter(p => p.approved === true && p.publicationAuthorized === true);
+    let profiles = data.interpreters.filter(p => p.approved === true && p.publicationAuthorized === true);
     const search = $('directory-search');
     const filters = [['directory-language','languages'],['directory-specialization','specializations'],['directory-location','serviceArea'],['directory-credential','credentials']];
     const values = (p, field) => Array.isArray(p[field]) ? p[field] : (p[field] ? [p[field]] : []);
-    filters.forEach(([id,field]) => [...new Set(profiles.flatMap(p=>values(p,field)))].sort().forEach(value=>$(id).add(new Option(value,value))));
+    const fillFilters = () => filters.forEach(([id,field]) => {
+      const select=$(id), previous=select.value, all=select.options[0].cloneNode(true);
+      select.replaceChildren(all);
+      [...new Set(profiles.flatMap(p=>values(p,field)))].sort().forEach(value=>select.add(new Option(value,value)));
+      if ([...select.options].some(option=>option.value===previous)) select.value=previous;
+    });
+    fillFilters();
     const render = () => {
       const q = search.value.trim().toLowerCase();
-      const found = profiles.filter(p => [p.name,...values(p,'languages'),...values(p,'specializations'),p.serviceArea,...values(p,'credentials')].join(' ').toLowerCase().includes(q) && filters.every(([id,field])=>!$(id).value||values(p,field).includes($(id).value)));
+      const found = profiles.filter(p => [p.name,...values(p,'languages'),...values(p,'specializations'),p.serviceArea,...values(p,'credentials'),...(p.details||[]).flat(),...(p.contacts||[]).map(c=>c.value)].join(' ').toLowerCase().includes(q) && filters.every(([id,field])=>!$(id).value||values(p,field).includes($(id).value)));
       $('directory-results').replaceChildren(...found.map(p => {
-        const article = document.createElement('article');article.append(text('h2',p.name));
+        const article = document.createElement('article');if(p.name)article.append(text('h2',p.name));
         for (const [label,field] of [['Languages','languages'],['Specializations','specializations'],['Professional credentials (member supplied)','credentials'],['Service area','serviceArea'],['Availability','availability']]) {
           const v=values(p,field);if(v.length)article.append(text('p',label+': '+v.join(', ')));
+        }
+        for (const [label,value] of p.details||[]) article.append(text('p',label+': '+value));
+        for (const contact of p.contacts||[]) {
+          if (contact.url) article.append(link(contact.label+': '+contact.value,contact.url));
+          else article.append(text('p',contact.label+': '+contact.value));
         }
         const website=safeURL(p.website);if(website)article.append(link('Professional website',website));
         const contact=p.contactAuthorized === true && safeURL(p.contactURL,true);if(contact)article.append(link('Contact interpreter',contact));
@@ -57,6 +68,10 @@
       $('directory-empty').textContent=!profiles.length ? 'Our interpreter directory is growing. Check back soon to connect with participating professionals.' : 'No interpreters match your search and filters.';
       $('directory-status').textContent=found.length+' participating interpreters';
     };
+    window.HubDirectory = {setProfiles: records => {
+      profiles=records.filter(p=>p.approved===true && p.publicationAuthorized===true);
+      fillFilters();render();
+    }};
     search.addEventListener('input',render);filters.forEach(([id])=>$(id).addEventListener('change',render));render();
   }
   $('year').textContent=new Date().getFullYear();

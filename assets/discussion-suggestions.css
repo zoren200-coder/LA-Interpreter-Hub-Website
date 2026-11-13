@@ -1,0 +1,11 @@
+.related-resource-finder{margin-top:24px;padding:20px;background:white;border:1px solid var(--line);border-radius:7px}
+.related-resource-finder h3{font:400 23px Georgia,serif;margin:0 0 10px;line-height:1.3}
+.related-resource-finder p{font-size:13px;color:var(--muted)}
+.related-resource-finder label{display:block;font-size:13px;font-weight:bold;margin-bottom:8px}
+.related-resource-finder textarea{display:block;width:100%;min-height:125px;resize:vertical;border:1px solid var(--line);border-radius:5px;padding:12px;font:inherit;color:var(--navy);background:white}
+.related-resource-finder textarea:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.discussion-suggestions{display:grid;gap:9px;margin-top:14px;font-size:13px}
+.discussion-suggestions a{display:block;border-left:3px solid var(--gold);padding:6px 10px;background:#f5f7f9;color:var(--navy);overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:3px}
+.conversation-with-resources{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
+.conversation-with-resources .related-resource-finder{margin-top:0}
+@media(max-width:850px){.conversation-with-resources{grid-template-columns:1fr;gap:18px}}
