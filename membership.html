@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="assets/community.css?v=directory-status-2">
 <script defer src="data/supabase-config.js?v=key-2"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script defer src="assets/membership.js"></script>
-<link rel="stylesheet" href="assets/membership.css">
+<script defer src="assets/membership.js?v=direct-signup-1"></script>
+<link rel="stylesheet" href="assets/membership.css?v=direct-signup-1">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -52,15 +52,17 @@
 <button id="member-signout" class="button" type="button">Sign out</button>
 </section>
 <div id="member-forms" class="membership-grid" hidden>
-<section class="directory-request"><h2>Become a member</h2>
+<section id="member-signup-panel" class="directory-request"><h2>Become a member</h2>
 <form id="member-signup">
 <label for="signup-name">Professional name</label><input id="signup-name" autocomplete="name" maxlength="150" required>
 <label for="signup-email">Email</label><input id="signup-email" type="email" autocomplete="email" required>
 <label for="signup-password">Password (at least 12 characters)</label><input id="signup-password" type="password" autocomplete="new-password" minlength="12" required>
 <label class="consent-label"><input id="signup-consent" type="checkbox" required><span>I want to register as a Hub member. My account information will be stored using Supabase for membership access and will not be listed publicly.</span></label>
 <button class="button" type="submit">Register as a member</button>
-</form></section>
-<section class="directory-request"><h2>Member sign-in</h2>
+</form>
+<p id="member-signin-link" hidden>Already a member? <a href="membership.html">Sign in</a></p>
+</section>
+<section id="member-login-panel" class="directory-request"><h2>Member sign-in</h2>
 <form id="member-login">
 <label for="login-email">Email</label><input id="login-email" type="email" autocomplete="email" required>
 <label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required>

@@ -19,6 +19,9 @@
 
   const redirect = new URL('membership.html', location.href).href;
 
+  const signupMode = new URLSearchParams(location.search).get("mode") === "signup";
+  let signupFocused = false;
+
   let recovery =
     new URLSearchParams(location.hash.slice(1)).get('type') === 'recovery';
 
@@ -31,6 +34,17 @@
     $('member-forms').hidden = member || recovery;
     $('member-account').hidden = !member || recovery;
     $('member-recovery').hidden = !recovery;
+    $('member-login-panel').hidden = signupMode;
+    $('member-signin-link').hidden = !signupMode;
+    $('member-forms').classList.toggle('signup-mode', signupMode);
+
+    if (signupMode && !member && !recovery && !signupFocused) {
+      signupFocused = true;
+      requestAnimationFrame(() => {
+        $('member-signup-panel').scrollIntoView({ block: 'start', behavior: 'instant' });
+        $('signup-name').focus({ preventScroll: true });
+      });
+    }
 
     $('member-identity').textContent = member
       ? 'Signed in as ' + session.user.email

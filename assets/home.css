@@ -48,3 +48,13 @@
 .conversation-actions .small-link{padding:10px 0;text-decoration:underline;text-underline-offset:3px;white-space:normal}
 .community-conversation .conversation-access{font-size:12px;margin:12px 0 0}
 @media(max-width:600px){.community-conversation{padding:20px}.community-conversation h3{font-size:23px}.conversation-actions{gap:10px}}
+
+/* The final homepage row pairs membership on the left with social links on the right. */
+.homepage-community-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start;padding-top:36px;margin-bottom:36px}
+.homepage-community-bottom .social-section{padding:0;margin:0;min-width:0}
+.homepage-community-bottom .join-hub{width:min(100%,420px);margin:0;min-width:0}
+.join-hub{padding:24px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:9px;box-shadow:0 4px 16px #142f4808}
+.join-hub h2{font-size:25px;margin:0 0 17px}
+.join-hub p{margin:0 0 20px;color:var(--muted)}
+.join-hub .button{min-height:48px;min-width:120px;justify-content:center}
+@media(max-width:700px){.homepage-community-bottom{grid-template-columns:1fr;gap:24px;padding-top:28px}.homepage-community-bottom .social-box{width:100%}.homepage-community-bottom .join-hub{width:100%;padding:20px}.join-hub .button{width:100%}}
